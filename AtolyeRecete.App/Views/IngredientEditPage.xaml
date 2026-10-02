@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="AtolyeRecete.App.Views.IngredientEditPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:vm="clr-namespace:AtolyeRecete.App.ViewModels"
+    x:DataType="vm:IngredientEditViewModel"
+    Title="{Binding PageTitle}">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="24" Spacing="12" MaximumWidthRequest="520" HorizontalOptions="Start">
+
+            <Label Text="Ad" />
+            <Entry Text="{Binding Name}" Placeholder="Örn. Soya mumu" />
+
+            <Label Text="Birim" />
+            <Picker
+                ItemsSource="{Binding Units}"
+                ItemDisplayBinding="{Binding Label, x:DataType=vm:UnitOption}"
+                SelectedItem="{Binding SelectedUnit}" />
+
+            <Label Text="Alış fiyatı (₺)" />
+            <Entry Text="{Binding PriceText}" Keyboard="Numeric" Placeholder="Örn. 300" />
+
+            <Label Text="Alış miktarı (seçilen birimde)" />
+            <Entry Text="{Binding QuantityText}" Keyboard="Numeric" Placeholder="Örn. 1000" />
+
+            <Label Text="{Binding UnitPricePreview}" FontAttributes="Bold" />
+
+            <Label Text="{Binding ErrorMessage}" TextColor="Red" IsVisible="{Binding HasError}" />
+
+            <HorizontalStackLayout Spacing="12" Margin="0,8,0,0">
+                <Button Text="Kaydet" Command="{Binding SaveCommand}" />
+                <Button
+                    Text="Sil"
+                    Command="{Binding DeleteCommand}"
+                    IsVisible="{Binding IsExisting}"
+                    BackgroundColor="Firebrick"
+                    TextColor="White" />
+            </HorizontalStackLayout>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

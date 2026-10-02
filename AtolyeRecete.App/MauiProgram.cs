@@ -33,6 +33,10 @@ public static class MauiProgram
 		// Ekranlar
 		builder.Services.AddTransient<HomeViewModel>();
 		builder.Services.AddTransient<HomePage>();
+		builder.Services.AddTransient<IngredientsViewModel>();
+		builder.Services.AddTransient<IngredientsPage>();
+		builder.Services.AddTransient<IngredientEditViewModel>();
+		builder.Services.AddTransient<IngredientEditPage>();
 
 #if DEBUG
 		builder.Logging.AddDebug();

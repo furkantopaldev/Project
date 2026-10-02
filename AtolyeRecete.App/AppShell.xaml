@@ -6,9 +6,15 @@
     xmlns:views="clr-namespace:AtolyeRecete.App.Views"
     Title="AtölyeReçete">
 
-    <ShellContent
-        Title="Ana Sayfa"
-        ContentTemplate="{DataTemplate views:HomePage}"
-        Route="HomePage" />
+    <TabBar>
+        <ShellContent
+            Title="Ana Sayfa"
+            ContentTemplate="{DataTemplate views:HomePage}"
+            Route="HomePage" />
+        <ShellContent
+            Title="Hammaddeler"
+            ContentTemplate="{DataTemplate views:IngredientsPage}"
+            Route="IngredientsPage" />
+    </TabBar>
 
 </Shell>
