@@ -11,5 +11,6 @@ public partial class AppShell : Shell
 		// Sekmelerde olmayan, push ile açılan sayfalar
 		Routing.RegisterRoute("IngredientEditPage", typeof(IngredientEditPage));
 		Routing.RegisterRoute("RecipeEditPage", typeof(RecipeEditPage));
+		Routing.RegisterRoute("SettingsPage", typeof(SettingsPage));
 	}
 }

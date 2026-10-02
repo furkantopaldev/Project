@@ -76,6 +76,11 @@ Neden: kural dört ekranda ayrı ayrı yazılırsa zamanla birbirinden ayrışı
 
 **Sunum betiği `docs/SUNUM_AKISI.md`:** hazırlık adımları, rakamlarıyla demo akışı, bilinen sınırlar ve olası zor sorular. Rakamlar uygulamada doğrulandı.
 
+**Telefon düzeni (tek tasarım, hem telefon hem masaüstü): alt çubukta 5 sekme (Ana Sayfa, Hammaddeler, Reçeteler, Simülatör, Fiyat listesi); Ayarlar, Ana Sayfa'nın sağ üstündeki "⚙ Ayarlar" ile açılan ayrı bir sayfadır.**
+Neden: Android alt çubuğu en fazla 5 sekme gösterir, fazlası "More" menüsüne düşüyordu. Ana Sayfa kartları 2x2, reçete kalemleri tek satır yerine kart (hammadde üstte, miktar/fire/tutar altta): 6 sütunlu satır telefonda sığmıyordu. Android durum çubuğu ve tema renkleri marka rengine (`colors.xml`) çekildi.
+
+**Sayı girişi hem virgül hem nokta kabul eder.** Android sayı klavyesi cihaz diline göre ondalık için virgül veya nokta gösterir (İngilizce emülatörde virgül süzülüyor, Türkçe telefonda gösterilir); okuma ikisini de destekler, binlik ayracı desteklenmez.
+
 **Çalışma şekli: faz faz, adım adım ilerlenir. Proje bitince dosya dosya anlatan bir .md (ör. docs/KOD_REHBERI.md) hazırlanacak.**
 
 ## 2026-10-02 İlk planlama oturumu

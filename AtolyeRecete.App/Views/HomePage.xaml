@@ -7,6 +7,10 @@
     x:DataType="vm:HomeViewModel"
     Title="Ana Sayfa">
 
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="⚙ Ayarlar" Command="{Binding OpenSettingsCommand}" />
+    </ContentPage.ToolbarItems>
+
     <ScrollView>
         <VerticalStackLayout Padding="24" Spacing="16" MaximumWidthRequest="900" HorizontalOptions="Fill">
 
@@ -16,7 +20,7 @@
             </VerticalStackLayout>
 
             <!-- Özet kartları -->
-            <Grid ColumnDefinitions="*,*,*,*" ColumnSpacing="12">
+            <Grid ColumnDefinitions="*,*" RowDefinitions="Auto,Auto" ColumnSpacing="12" RowSpacing="12">
                 <Border Padding="14" StrokeShape="RoundRectangle 12" StrokeThickness="0"
                         BackgroundColor="{AppThemeBinding Light={StaticResource Secondary}, Dark={StaticResource Gray900}}">
                     <VerticalStackLayout>
@@ -31,14 +35,14 @@
                         <Label Text="Reçete" FontSize="12" TextColor="Gray" />
                     </VerticalStackLayout>
                 </Border>
-                <Border Grid.Column="2" Padding="14" StrokeShape="RoundRectangle 12" StrokeThickness="0"
+                <Border Grid.Row="1" Grid.Column="0" Padding="14" StrokeShape="RoundRectangle 12" StrokeThickness="0"
                         BackgroundColor="{AppThemeBinding Light={StaticResource Secondary}, Dark={StaticResource Gray900}}">
                     <VerticalStackLayout>
                         <Label Text="{Binding PriceListText}" FontSize="28" FontAttributes="Bold" />
                         <Label Text="Fiyat listesinde" FontSize="12" TextColor="Gray" />
                     </VerticalStackLayout>
                 </Border>
-                <Border Grid.Column="3" Padding="14" StrokeShape="RoundRectangle 12" StrokeThickness="0"
+                <Border Grid.Row="1" Grid.Column="1" Padding="14" StrokeShape="RoundRectangle 12" StrokeThickness="0"
                         BackgroundColor="{AppThemeBinding Light={StaticResource Secondary}, Dark={StaticResource Gray900}}">
                     <VerticalStackLayout>
                         <Label Text="{Binding HourlyRateText}" FontSize="18" FontAttributes="Bold" VerticalOptions="Center" />

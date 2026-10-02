@@ -5,7 +5,7 @@ Süre: yaklaşık 8-10 dakika. Tüm rakamlar örnek veri paketiyle uygulamada do
 ## Hazırlık (sunumdan önce, bir kez)
 
 1. Uygulamayı aç: `dotnet run --project AtolyeRecete.App -f net9.0-windows10.0.19041.0`
-2. **Ayarlar** sekmesi:
+2. **Ayarlar** (Ana Sayfa'nın sağ üstündeki "⚙ Ayarlar"):
    - "Tüm verileri sil", ardından "Örnek verileri yükle" (başlangıç durumuna döner).
    - İşletme adı: kendi (veya örnek) atölye adını yaz. Saatlik ücret `150`, genel gider `10`, marj uyarı eşiği `30` olmalı. **Kaydet**.
 3. **Ana Sayfa**'da şunları görmelisin: 10 hammadde, 2 reçete, "2 / 2" fiyat listesinde, yeşil "Her şey yolunda" kutusu.
@@ -46,7 +46,7 @@ El yapımı üreticiler fiyatı genelde "komşu ne kadar satıyor"a bakarak koyu
   - 100cc: %49,69 → **-%0,21** (zararına satış, maliyet ₺125,79 → ₺250,53)
 - **Ana Sayfa**'da "Dikkat gerektirenler" turuncu görünür.
 - Geri al: soya mumu fiyatını `300`'e çevir (bu sefer uyarı çıkmaz, marj yükseldi).
-- İsteğe bağlı: **Ayarlar**'da saatlik ücreti `200` yap: 200cc maliyeti **₺195,43**, simülatörde Trendyol %40 marj **₺488,58**. Sonra `150`'ye geri al.
+- İsteğe bağlı: **Ayarlar**'da (⚙, Ana Sayfa sağ üst) saatlik ücreti `200` yap: 200cc maliyeti **₺195,43**, simülatörde Trendyol %40 marj **₺488,58**. Sonra `150`'ye geri al.
 
 ### 6. Müşteri fiyat listesi PDF'i (1 dk)
 **Fiyat listesi** → "PDF oluştur" → "Aç". Vurgu: müşteriye **yalnızca ürün adı ve fiyat** gider; maliyet ve marj paylaşılmaz. Fiyatı girilmemiş reçeteler listeye girmez.
@@ -57,12 +57,12 @@ Bu bir demo; ürün değil. Henüz doğrulanmayan iki risk:
 - **Ödeme isteği:** Hedef kitlenin ödeme gücü düşük olabilir. Plan: landing page + fiyat gösterip ön kayıt ölçümü.
 
 ## Sunum sonrası sıfırlama
-**Ayarlar** → "Tüm verileri sil" → "Örnek verileri yükle"; saatlik ücret 150, eşik 30.
+**Ana Sayfa → ⚙ Ayarlar** → "Tüm verileri sil" → "Örnek verileri yükle"; saatlik ücret 150, eşik 30.
 
 ## Bilinen sınırlar (sorulursa dürüstçe söyle)
 - **Komisyon oranları örnektir** (`platforms.json`), yayın öncesi güncel platform tablolarından doğrulanmalıdır.
 - Fiyatlar **KDV hariç**; KDV ayarı yok.
-- Masaüstü demo **Windows**'ta. Android'de de derleniyor ve emülatörde çalışıyor; telefon düzeni (5 sekme, dar ekran) henüz uyarlanmadı.
+- Masaüstü demo **Windows**'ta. Android'de de çalışıyor (emülatörde doğrulandı): telefon düzeni, 5 sekme, PDF üretimi, Aç ve Paylaş.
 - Hammadde fiyat geçmişi tutulmuyor, yalnızca güncel fiyat var.
 - Backend, hesap, senkron ve abonelik yok (veriler yalnızca bu bilgisayarda).
 - PDF "Paylaş" düğmesi Windows'ta (paketlenmemiş uygulama) denenmedi; "Aç" ile açıp oradan gönderilebilir.

@@ -43,7 +43,7 @@ internal sealed class TextStyle : IDisposable
         for (var i = 0; i < text.Length;)
         {
             var codepoint = char.ConvertToUtf32(text, i);
-            if (!TypefaceFor(codepoint).ContainsGlyph(codepoint)) return false;
+            if (!HasGlyph(TypefaceFor(codepoint), codepoint)) return false;
             i += char.IsSurrogatePair(text, i) ? 2 : 1;
         }
         return true;
@@ -100,12 +100,18 @@ internal sealed class TextStyle : IDisposable
         yield return (text[start..], current);
     }
 
+    private static bool HasGlyph(SKTypeface typeface, int codepoint)
+    {
+        using var font = new SKFont(typeface);
+        return font.ContainsGlyph(codepoint);
+    }
+
     private SKTypeface TypefaceFor(int codepoint)
     {
-        if (_primary.ContainsGlyph(codepoint)) return _primary;
+        if (HasGlyph(_primary, codepoint)) return _primary;
 
         foreach (var fallback in _fallbacks)
-            if (fallback.ContainsGlyph(codepoint)) return fallback;
+            if (HasGlyph(fallback, codepoint)) return fallback;
 
         var match = SKFontManager.Default.MatchCharacter(
             null, _bold ? SKFontStyle.Bold : SKFontStyle.Normal, null, codepoint);

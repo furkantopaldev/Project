@@ -43,6 +43,9 @@ public partial class HomeViewModel(
     public ObservableCollection<AttentionItem> Attention { get; } = new();
 
     [RelayCommand]
+    private Task OpenSettingsAsync() => Shell.Current.GoToAsync("SettingsPage");
+
+    [RelayCommand]
     private async Task LoadAsync()
     {
         await startup.EnsureInitializedAsync();
