@@ -1,3 +1,4 @@
+using AtolyeRecete.Core;
 using AtolyeRecete.Core.Models;
 using AtolyeRecete.Data.Rows;
 
@@ -7,8 +8,10 @@ public class IngredientRepository(AtolyeDatabase db) : IIngredientRepository
 {
     public async Task<List<Ingredient>> GetAllAsync()
     {
-        var rows = await db.Connection.Table<IngredientRow>().OrderBy(r => r.Name).ToListAsync();
-        return rows.Select(r => r.ToModel()).ToList();
+        var rows = await db.Connection.Table<IngredientRow>().ToListAsync();
+
+        // Sıralama bellekte, Türkçe kurala göre (SQL ORDER BY Türkçe harfleri bilmez).
+        return rows.Select(r => r.ToModel()).OrderBy(i => i.Name, TextOrder.Turkish).ToList();
     }
 
     public async Task<Ingredient?> GetAsync(int id)

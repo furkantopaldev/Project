@@ -89,6 +89,33 @@ public class DataTests
     }
 
     [Fact]
+    public async Task Ingredient_GetAllUsesTurkishAlphabetOrder()
+    {
+        // SQLite'ın varsayılan sıralaması (BINARY) büyük harfi küçüğün önüne, ç/ş/ğ'yi en sona koyar.
+        var (repo, _, _) = await CreateAsync();
+        foreach (var name in new[] { "Zeytin", "çam", "Ardıç", "bambu", "şeker", "Etiket" })
+            await repo.SaveAsync(NewIngredient(name));
+
+        var names = (await repo.GetAllAsync()).Select(i => i.Name).ToList();
+
+        Assert.Equal(new[] { "Ardıç", "bambu", "çam", "Etiket", "şeker", "Zeytin" }, names);
+    }
+
+    [Fact]
+    public async Task Recipe_GetAllUsesTurkishAlphabetOrder()
+    {
+        var (ingredients, recipes, _) = await CreateAsync();
+        var a = NewIngredient();
+        await ingredients.SaveAsync(a);
+        foreach (var name in new[] { "Zeytin mumu", "çam mumu", "Ardıç mumu", "bambu mumu" })
+            await recipes.SaveAsync(new Recipe { Name = name, Items = { new RecipeItem { Ingredient = a, Quantity = 1m } } });
+
+        var names = (await recipes.GetAllAsync()).Select(r => r.Name).ToList();
+
+        Assert.Equal(new[] { "Ardıç mumu", "bambu mumu", "çam mumu", "Zeytin mumu" }, names);
+    }
+
+    [Fact]
     public async Task Ingredient_DeleteRemovesIt()
     {
         var (repo, _, _) = await CreateAsync();

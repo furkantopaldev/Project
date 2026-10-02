@@ -1,4 +1,3 @@
-using System.Globalization;
 using AtolyeRecete.Core.Models;
 
 namespace AtolyeRecete.Core;
@@ -29,8 +28,7 @@ public static class PriceListBuilder
         }
 
         // Türkçe alfabe: ç, ğ, ı, ö, ş, ü doğru yerlerine oturur; büyük/küçük harf fark etmez.
-        var comparer = StringComparer.Create(new CultureInfo("tr-TR"), ignoreCase: true);
-        entries.Sort((a, b) => comparer.Compare(a.Name, b.Name));
+        entries.Sort((a, b) => TextOrder.Turkish.Compare(a.Name, b.Name));
 
         return new PriceList(entries, skipped);
     }

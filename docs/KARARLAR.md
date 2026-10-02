@@ -90,6 +90,9 @@ Bilinen sınırlar: gerçek telefonda (özellikle düşük donanım, farklı kla
 **Form alanları (Ayarlar, Hammadde düzenle, Satış fiyatı) tam genişlikte; sütun genişliği sayfada sınırlanır (Ayarlar 600, Hammadde düzenle 520), alanlarda ayrı `MaximumWidthRequest`/`Start` yok.**
 Neden: içerik kadar daralan alanlar telefonda çok küçük çıkıyordu ("150" alanı ~50 piksel), parmakla vurmak zordu. Emülatörde Hammadde ve Fiyatlar sayfaları açık/karanlık temada ve küçük ekranda tekrar doğrulandı.
 
+**Listelerin sıralaması Türkçe alfabeye göre ve bellekte yapılır (`TextOrder.Turkish`, Core); SQL `ORDER BY` kullanılmaz.** Fiyat listesi PDF'i, hammadde ve reçete listeleri aynı karşılaştırıcıyı kullanır.
+Neden: SQLite'ın varsayılan sıralaması (BINARY) büyük harfi küçüğün önüne koyar ve ç/ş/ğ'yi en sona atar ("bambu", "çam", "şeker" listenin sonuna düşerdi). Örnek veri ve testler ASCII büyük harfli adlar kullandığı için kod yazılırken fark edilmedi; kod rehberi yazılırken şüphelenilip doğrulandı ve testle düzeltildi. Ders: test verisi gerçek kullanıcı verisini (Türkçe karakter, küçük harf) temsil etmeli.
+
 **Çalışma şekli: faz faz, adım adım ilerlenir. Proje bitince dosya dosya anlatan bir .md (ör. docs/KOD_REHBERI.md) hazırlanacak.**
 
 ## 2026-10-02 İlk planlama oturumu

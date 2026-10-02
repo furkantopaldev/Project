@@ -1,3 +1,4 @@
+using AtolyeRecete.Core;
 using AtolyeRecete.Core.Models;
 using AtolyeRecete.Data.Rows;
 
@@ -8,7 +9,9 @@ public class RecipeRepository(AtolyeDatabase db) : IRecipeRepository
     public async Task<List<Recipe>> GetAllAsync()
     {
         var ingredients = await LoadIngredientsAsync();
-        var recipeRows = await db.Connection.Table<RecipeRow>().OrderBy(r => r.Name).ToListAsync();
+        var recipeRows = (await db.Connection.Table<RecipeRow>().ToListAsync())
+            .OrderBy(r => r.Name, TextOrder.Turkish) // SQL ORDER BY Türkçe harfleri bilmez
+            .ToList();
         var itemRows = await db.Connection.Table<RecipeItemRow>().ToListAsync();
 
         return recipeRows.Select(r => Build(r, itemRows.Where(i => i.RecipeId == r.Id), ingredients)).ToList();
