@@ -14,7 +14,7 @@ Neden: makinede hazır, emülatör kurulumu gerekmez.
 
 **Hammadde tek birimde tutulur (g, ml, adet); birim dönüşümü MVP'de yok.**
 
-**Çalışma şekli: faz faz, adım adım ilerlenir; fazlar bitince yazılan kod kullanıcıya anlatılır.**
+**Çalışma şekli: faz faz, adım adım ilerlenir. Proje bitince dosya dosya anlatan bir .md (ör. docs/KOD_REHBERI.md) hazırlanacak.**
 
 ## 2026-10-02 İlk planlama oturumu
 
