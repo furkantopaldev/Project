@@ -52,6 +52,9 @@ Neden: "marj düştü" uyarısı ve müşteri fiyat listesi PDF'i (Faz 4) için 
 **Marj tanımı (satış fiyatı için): (fiyat - birim maliyet) / fiyat, komisyon öncesi.** Platform bazlı marjı simülatör gösterir.
 **Marj uyarı eşiği Ayarlar'da tek bir genel değer (varsayılan %30); reçete bazlı eşik yok.** Eşiğin altında reçete düzenlemede uyarı, listede "⚠ düşük" görünür.
 
+**Marj düşüş uyarısı, hammadde kaydedilirken çalışır (`MarginAlerts.FindDrops`, Core).** Kayıttan önce ve sonra tüm reçeteler yüklenir, karşılaştırılır. Reçete uyarı listesine girer ancak ve ancak: satış fiyatı varsa, marj kötüleştiyse ve yeni marj eşiğin kesinlikle altındaysa.
+Neden: sadece "eşiğin altında" demek, zaten düşük ve hiç değişmemiş reçeteler için her kayıtta gürültü üretirdi; sadece "düştü" demek de küçük, zararsız oynamalar için uyarırdı. Yeni hammadde eklemek uyarı üretmez (hiçbir reçetede kullanılamaz). Hammadde silme zaten reçetede kullanılıyorsa engelli.
+
 **Çalışma şekli: faz faz, adım adım ilerlenir. Proje bitince dosya dosya anlatan bir .md (ör. docs/KOD_REHBERI.md) hazırlanacak.**
 
 ## 2026-10-02 İlk planlama oturumu

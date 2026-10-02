@@ -1,4 +1,5 @@
 using AtolyeRecete.App.Services;
+using AtolyeRecete.Core;
 using AtolyeRecete.Core.Models;
 using AtolyeRecete.Data.Repositories;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -8,7 +9,10 @@ namespace AtolyeRecete.App.ViewModels;
 
 public record UnitOption(UnitOfMeasure Unit, string Label);
 
-public partial class IngredientEditViewModel(IIngredientRepository repository)
+public partial class IngredientEditViewModel(
+    IIngredientRepository repository,
+    IRecipeRepository recipes,
+    AppSettings settings)
     : ObservableObject, IQueryAttributable
 {
     public IReadOnlyList<UnitOption> Units { get; } =
@@ -97,6 +101,9 @@ public partial class IngredientEditViewModel(IIngredientRepository repository)
             return;
         }
 
+        // Düzenlemede fiyat değişimi reçetelerin marjını etkileyebilir: kayıttan önce ve sonra karşılaştır.
+        var recipesBefore = IsExisting ? await recipes.GetAllAsync() : null;
+
         await repository.SaveAsync(new Ingredient
         {
             Id = _id,
@@ -106,7 +113,31 @@ public partial class IngredientEditViewModel(IIngredientRepository repository)
             PurchaseQuantity = quantity
         });
 
+        if (recipesBefore is not null)
+        {
+            var threshold = settings.MarginWarningPercentValue;
+            var drops = MarginAlerts.FindDrops(
+                recipesBefore,
+                await recipes.GetAllAsync(),
+                settings.HourlyRate,
+                Display.RateFromPercent(threshold));
+
+            if (drops.Count > 0)
+                await Shell.Current.DisplayAlert("Marj uyarısı", DescribeDrops(drops, threshold), "Tamam");
+        }
+
         await Shell.Current.GoToAsync("..");
+    }
+
+    private static string DescribeDrops(IReadOnlyList<MarginDrop> drops, decimal thresholdPercent)
+    {
+        var lines = drops.Select(d =>
+            $"• {d.RecipeName}: {Display.PercentLabel(d.MarginBefore)} → {Display.PercentLabel(d.MarginAfter)} " +
+            $"(satış {Display.Money(d.SalePrice)}, maliyet {Display.Money(d.UnitCostBefore)} → {Display.Money(d.UnitCostAfter)})");
+
+        return $"Bu fiyat değişikliğinden sonra marjı %{Display.NumberText(thresholdPercent)} eşiğinin altında kalan reçeteler:\n\n"
+            + string.Join("\n", lines)
+            + "\n\nSatış fiyatlarını gözden geçirmek için Simülatör sekmesini kullanabilirsin.";
     }
 
     [RelayCommand]
