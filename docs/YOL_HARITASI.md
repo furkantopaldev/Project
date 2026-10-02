@@ -23,7 +23,7 @@
 
 ## Faz 4: Paylaşım ve sunum cilası
 
-- Müşteriye fiyat listesi PDF'i (QuestPDF) + Share API
+- Müşteriye fiyat listesi PDF'i (başta QuestPDF, mobilde çalışmadığı için SkiaSharp'a geçildi) + Share API
 - Hammadde fiyat güncelleme, tüm reçetelerin otomatik yenilenmesi, marj düşüş uyarısı
 - Ayarlar (Preferences): saatlik işçilik, genel gider %, para birimi
 - Sunum demosu: seed data ile baştan sona akış

@@ -8,7 +8,7 @@ Amaç şu an: öğrenme + sunum için çalışan, güzel bir MVP. Pazar doğrula
 
 - .NET MAUI (.NET 9), MVVM, `CommunityToolkit.Mvvm` (source generators), `CommunityToolkit.Maui`
 - Yerel veri: `sqlite-net-pcl` (backend YOK, MVP'de eklenmeyecek)
-- PDF: QuestPDF (müşteriye giden fiyat listesi)
+- PDF: SkiaSharp `SKDocument` (müşteriye giden fiyat listesi; Windows ve Android'de aynı kod çalışır)
 - Testler: xUnit (Core hesap motoru + Data katmanı, bellek içi SQLite ile)
 
 ## Çözüm yapısı
@@ -16,7 +16,7 @@ Amaç şu an: öğrenme + sunum için çalışan, güzel bir MVP. Pazar doğrula
 ```
 AtolyeRecete.Core   -> domain modelleri + hesap motoru. Saf C#, MAUI/SQLite bağımlılığı YOK.
 AtolyeRecete.Data   -> SQLite repository'leri, SeedService
-AtolyeRecete.Pdf    -> QuestPDF ile müşteri fiyat listesi PDF'i (MAUI'den bağımsız, testli)
+AtolyeRecete.Pdf    -> SkiaSharp ile müşteri fiyat listesi PDF'i (MAUI'den bağımsız, testli)
 AtolyeRecete.App    -> MAUI: Views, ViewModels, Shell
 AtolyeRecete.Tests  -> Core, Data ve Pdf için xUnit testleri
 ```
@@ -49,7 +49,8 @@ dotnet test
 dotnet build AtolyeRecete.App -f net9.0-windows10.0.19041.0
 ```
 
-Uygulama şu an sadece Windows hedefli (Android sonra eklenecek). Çalıştırma: `dotnet run --project AtolyeRecete.App -f net9.0-windows10.0.19041.0`.
+Uygulama Windows ve Android hedeflidir (iOS/Mac yok). Windows: `dotnet run --project AtolyeRecete.App -f net9.0-windows10.0.19041.0`.
+Android: önce emülatörü aç (`%LOCALAPPDATA%\Android\Sdk\emulator\emulator.exe -avd Medium_Phone_API_36.0`) ya da telefonu USB hata ayıklamayla bağla, sonra `dotnet build AtolyeRecete.App -f net9.0-android -t:Run`.
 Veritabanı: `%LOCALAPPDATA%\User Name\com.atolyerecete.app\Data\atolyerecete.db3`. Örnek veri yalnızca ilk çalıştırmada yüklenir; sıfırlamak için Ayarlar'da "Tüm verileri sil" ve "Örnek verileri yükle".
 
 ## Durum

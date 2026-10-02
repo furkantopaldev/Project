@@ -62,7 +62,7 @@ Bu bir demo; ürün değil. Henüz doğrulanmayan iki risk:
 ## Bilinen sınırlar (sorulursa dürüstçe söyle)
 - **Komisyon oranları örnektir** (`platforms.json`), yayın öncesi güncel platform tablolarından doğrulanmalıdır.
 - Fiyatlar **KDV hariç**; KDV ayarı yok.
-- Şu an yalnızca **Windows**; Android sonraki adım.
+- Masaüstü demo **Windows**'ta. Android'de de derleniyor ve emülatörde çalışıyor; telefon düzeni (5 sekme, dar ekran) henüz uyarlanmadı.
 - Hammadde fiyat geçmişi tutulmuyor, yalnızca güncel fiyat var.
 - Backend, hesap, senkron ve abonelik yok (veriler yalnızca bu bilgisayarda).
 - PDF "Paylaş" düğmesi Windows'ta (paketlenmemiş uygulama) denenmedi; "Aç" ile açıp oradan gönderilebilir.

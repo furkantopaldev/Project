@@ -25,8 +25,8 @@ Neden: sqlite-net decimal'i double yazar, para kuralını bozar. Testlerde kayı
 **CommunityToolkit.Maui 12.3.0'da sabit.** Güncel 15.x .NET 10 gerektiriyor; biz net9.0'dayız.
 Neden: NU1202 uyumsuzluk hatası. .NET 10'a geçilirse birlikte yükseltilir.
 
-**MAUI hedefi şimdilik sadece net9.0-windows10.0.19041.0.** Android/iOS/Mac hedefleri csproj'dan çıkarıldı.
-Neden: demo Windows'ta; gereksiz iş yükü derlenmesin. Android için csproj'a net9.0-android eklenir.
+**MAUI hedefleri: net9.0-windows10.0.19041.0 ve net9.0-android.** iOS/Mac yok (Mac gerektirir, kapsam dışı).
+Neden: demo Windows'ta, ürün mobil. Android emülatör ve derleme makinede hazır; emülatör `adb` ile sürülüp doğrulanabiliyor.
 
 **platforms.json: `{ "version": 1, "platforms": [...] }`, MAUI asset olarak uygulamayla gelir (Resources/Raw).** Okuma ve doğrulama Core'da (`PlatformCatalog`), dosyaya erişim App'te (`PlatformService`).
 Neden: oranlar koda gömülmez, ileride uzaktan çekilebilir (sürüm alanı bunun için). Eksik veya geçersiz alan sessizce 0 sayılmaz, `FormatException` verir.
@@ -55,16 +55,17 @@ Neden: "marj düştü" uyarısı ve müşteri fiyat listesi PDF'i (Faz 4) için 
 **Marj düşüş uyarısı, hammadde kaydedilirken çalışır (`MarginAlerts.FindDrops`, Core).** Kayıttan önce ve sonra tüm reçeteler yüklenir, karşılaştırılır. Reçete uyarı listesine girer ancak ve ancak: satış fiyatı varsa, marj kötüleştiyse ve yeni marj eşiğin kesinlikle altındaysa.
 Neden: sadece "eşiğin altında" demek, zaten düşük ve hiç değişmemiş reçeteler için her kayıtta gürültü üretirdi; sadece "düştü" demek de küçük, zararsız oynamalar için uyarırdı. Yeni hammadde eklemek uyarı üretmez (hiçbir reçetede kullanılamaz). Hammadde silme zaten reçetede kullanılıyorsa engelli.
 
-**PDF üretimi ayrı proje: `AtolyeRecete.Pdf` (QuestPDF, yalnızca Core'a bağlı).** Hangi reçetelerin listeye gireceği ve sıralama Core'da (`PriceListBuilder`, testli); çizim Pdf projesinde.
-Neden: Core saf kalsın, MAUI'siz test edilebilsin (testler PDF'i gerçekten üretir; eksik glif, ör. ₺ veya Türkçe harf, QuestPDF'te hata verdiği için yakalanır).
+**PDF üretimi ayrı proje: `AtolyeRecete.Pdf` (SkiaSharp, yalnızca Core'a bağlı).** Hangi reçetelerin listeye gireceği ve sıralama Core'da (`PriceListBuilder`, testli); sayfalama ve satır sarma `PriceListLayout`'ta (çizimden bağımsız, ölçüm fonksiyonuyla testli); çizim `PriceListPdf`/`TextStyle`'da.
+Neden: Core saf kalsın, MAUI'siz test edilebilsin. Yazı tipi kapsamı (ç ğ ı İ ö ş ü ve ₺) ve kalın yazı testle doğrulanır; bir harf sistem yazı tipinde yoksa başka bir yazı tipine düşülür.
 
 **Fiyat listesi PDF'i: yalnızca satış fiyatı girilmiş (> 0) reçeteler, Türkçe alfabeye göre sıralı; yalnızca ürün adı ve fiyat içerir (maliyet/marj yok), "Fiyatlar KDV hariçtir." notu taşır.** Fiyatı olmayanlar listeye girmez, ekranda kaç tane atlandığı yazar.
 Neden: müşteriye maliyet gösterilmez (ilk plan kararı); fiyatsız satırlar müşteri listesinde boş görünürdü.
 
 **PDF Belgelerim\AtolyeRecete\ altına `Fiyat-Listesi-YYYY-AA-GG.pdf` olarak kaydedilir (aynı gün üzerine yazar); "Aç" varsayılan PDF okuyucuyla açar, "Paylaş" MAUI Share API'sini kullanır.** İşletme adı Ayarlar'dan girilir, boşsa başlık yalnızca "Fiyat Listesi".
-Açık nokta: Windows'ta paketlenmemiş uygulamada Paylaş çalışmayabilir; çalışmazsa kullanıcıya "Aç ile açıp oradan gönder" mesajı gösterilir. Android'e geçince Paylaş birincil yol olacak.
+Android'de PDF uygulamanın önbellek klasörüne yazılır (Belgelerim yok); "Paylaş" birincil yoldur. Android'de doğrulandı: PDF üretimi, "Aç" (Google PDF görüntüleyici) ve "Paylaş" (paylaşım penceresi) çalışıyor. Windows'ta "Paylaş" denenmedi; çalışmazsa kullanıcıya "Aç ile açıp oradan gönder" mesajı gösterilir. PDF üretimindeki beklenmedik hatalar uygulamayı çökertmez, ekranda mesaj olarak gösterilir.
 
-**QuestPDF Community lisansı kullanılıyor** (yıllık geliri 1 milyon USD altı işletmeler, öğrenciler, kâr amacı gütmeyenler için ücretsiz). Ticari büyümede lisans yeniden değerlendirilir.
+**PDF için QuestPDF bırakıldı, SkiaSharp (MIT) kullanılıyor.** QuestPDF mobilde (Android) hiç çalışmıyor: yerel bileşenleri yalnızca Windows/Linux/macOS için, kendi hata mesajı PDF üretimini sunucuya taşımayı öneriyor. Bu, "backend yok, yerel" ilkemizle bağdaşmaz. Android'de "PDF oluştur" uygulamayı çökertti, bu yüzden değişiklik yapıldı.
+Neden: tek kod yolu, iki platformda çalışır, lisans kısıtı ve QuestPDF'in 16 KB sayfa boyutu uyarıları ortadan kalktı. Bedeli: QuestPDF'in yerleşim motoru gitti, başlık/tablo/sayfa numarası elle çiziliyor (fiyat listesi basit olduğu için makul).
 
 **"Marj eşiğin altında mı" kuralı tek yerde: `MarginAlerts.IsBelowThreshold` (Core, kesin küçüktür; eşit marj düşük sayılmaz).** Reçete listesi, reçete düzenleme, Ana Sayfa ve marj uyarısı aynı kuralı kullanır.
 Neden: kural dört ekranda ayrı ayrı yazılırsa zamanla birbirinden ayrışır.

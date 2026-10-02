@@ -26,7 +26,7 @@ public class PriceListPdfTests
     [Fact]
     public void Create_TurkishCharactersAndLiraSign_DoNotThrow()
     {
-        // QuestPDF, yazı tipinde eksik glifte hata verir: ç ğ ı İ ö ş ü ve ₺ doğrulanır.
+        // Eksik harf PDF'te kutu (□) olarak çıkar; yazı tipi kapsamı PriceListLayoutTests.Font_* testlerinde ayrıca doğrulanır.
         var list = ListOf(
             ("Çam & Ardıç ıslak toprak mumu", 125.5m),
             ("İstanbul Şehir Gökyüzü Öğle Üzüm", 1999.99m),

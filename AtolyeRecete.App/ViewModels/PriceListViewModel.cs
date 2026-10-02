@@ -83,8 +83,12 @@ public partial class PriceListViewModel(
         {
             var bytes = PriceListPdf.Create(list, settings.BusinessName, DateOnly.FromDateTime(DateTime.Today));
 
-            var folder = Path.Combine(
-                Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "AtolyeRecete");
+            // Windows: kullanıcının Belgelerim klasörü (dosyayı kendisi bulabilsin).
+            // Android: uygulamanın önbellek klasörü (Belgelerim yok; dosya "Paylaş" ile gönderilir).
+            var root = DeviceInfo.Platform == DevicePlatform.WinUI
+                ? Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)
+                : FileSystem.CacheDirectory;
+            var folder = Path.Combine(root, "AtolyeRecete");
             Directory.CreateDirectory(folder);
 
             var path = Path.Combine(folder, $"Fiyat-Listesi-{DateTime.Today:yyyy-MM-dd}.pdf");
@@ -101,6 +105,12 @@ public partial class PriceListViewModel(
         catch (UnauthorizedAccessException ex)
         {
             ErrorMessage = $"PDF kaydedilemedi: {ex.Message}";
+        }
+        catch (Exception ex)
+        {
+            // Ör. PDF kütüphanesinin yerel bileşeni bu cihazda yüklenemezse (Android'de QuestPDF böyleydi):
+            // uygulama çökmek yerine nedenini göstermeli.
+            ErrorMessage = $"PDF oluşturulamadı: {ex.GetBaseException().Message}";
         }
     }
 
