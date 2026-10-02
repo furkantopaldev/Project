@@ -44,7 +44,7 @@ Yok (sonra): stok bildirimi, sipariş kuyruğu, çoklu para birimi, barkod, hesa
 ## Komutlar
 
 ```
-dotnet test AtolyeRecete.Tests
+dotnet test
 dotnet build AtolyeRecete.App -f net9.0-windows10.0.19041.0
 ```
 
@@ -52,7 +52,7 @@ dotnet build AtolyeRecete.App -f net9.0-windows10.0.19041.0
 
 ## Durum
 
-- [ ] Faz 1: Core hesap motoru + testler
+- [x] Faz 1: Core hesap motoru + testler (25 test yeşil)
 - [ ] Faz 2: Data katmanı + hammadde/reçete ekranları
 - [ ] Faz 3: Pazaryeri simülatörü
 - [ ] Faz 4: PDF + fiyat güncelleme + sunum cilası
