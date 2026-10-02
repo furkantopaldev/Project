@@ -49,7 +49,7 @@ dotnet build AtolyeRecete.App -f net9.0-windows10.0.19041.0
 ```
 
 Uygulama şu an sadece Windows hedefli (Android sonra eklenecek). Çalıştırma: `dotnet run --project AtolyeRecete.App -f net9.0-windows10.0.19041.0`.
-Veritabanı: `%LOCALAPPDATA%\User Name\com.atolyerecete.app\Data\atolyerecete.db3` (silinirse seed yeniden yüklenir).
+Veritabanı: `%LOCALAPPDATA%\User Name\com.atolyerecete.app\Data\atolyerecete.db3`. Örnek veri yalnızca ilk çalıştırmada yüklenir; sıfırlamak için Ayarlar'da "Tüm verileri sil" ve "Örnek verileri yükle".
 
 ## Durum
 

@@ -38,6 +38,14 @@ Neden: satıcının gerçekten alacağı fiyat kuruşa yuvarlanmış fiyattır; 
 
 **App'te `Platform` adı MAUI'nin `Microsoft.Maui.ApplicationModel.Platform` sınıfıyla çakışır; ilgili dosyalarda `using Platform = AtolyeRecete.Core.Models.Platform;` takma adı kullanılır.** Modeli yeniden adlandırmak Core, testler ve dokümanlara dokunurdu.
 
+**Ayarlar MAUI Preferences'ta: saatlik işçilik (varsayılan 150 TL), yeni reçete için genel gider % (varsayılan 10), örnek veri bayrağı.** Hesaplayan tüm ekranlar ücreti `AppSettings`'ten okur; sabit değer kalmadı.
+Neden: ücret değişince tüm reçeteler, simülatör ve (Faz 4) PDF/uyarılar aynı değeri kullansın. Decimal ayarlar metin saklanır (Preferences decimal'i double'a çevirirdi).
+
+**Örnek veri yalnızca ilk çalıştırmada otomatik yüklenir (`SeedApplied` bayrağı).** Kullanıcı "Tüm verileri sil" derse bir sonraki açılışta geri gelmez; Ayarlar'dan "Örnek verileri yükle" ile (yalnızca veritabanı boşken) yeniden yüklenebilir.
+Neden: önceki davranışta (boşsa her açılışta yükle) silme işlemi bir sonraki açılışta geri alınıyordu.
+
+**Genel gider % ayarı yalnızca yeni reçetelerin başlangıç değeridir; mevcut reçeteleri değiştirmez.** Her reçete kendi oranını saklar.
+
 **Çalışma şekli: faz faz, adım adım ilerlenir. Proje bitince dosya dosya anlatan bir .md (ör. docs/KOD_REHBERI.md) hazırlanacak.**
 
 ## 2026-10-02 İlk planlama oturumu
