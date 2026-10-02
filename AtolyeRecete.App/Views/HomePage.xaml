@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="AtolyeRecete.App.Views.HomePage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:vm="clr-namespace:AtolyeRecete.App.ViewModels"
+    x:DataType="vm:HomeViewModel"
+    Title="Ana Sayfa">
+
+    <VerticalStackLayout Padding="24" Spacing="16">
+        <Label Text="AtölyeReçete" FontSize="28" FontAttributes="Bold" />
+
+        <HorizontalStackLayout Spacing="24">
+            <Label Text="{Binding IngredientCount, StringFormat='Hammadde: {0}'}" FontSize="16" />
+            <Label Text="{Binding RecipeCount, StringFormat='Reçete: {0}'}" FontSize="16" />
+        </HorizontalStackLayout>
+
+        <Label Text="Reçeteler (birim maliyet)" FontSize="18" FontAttributes="Bold" />
+
+        <CollectionView ItemsSource="{Binding Recipes}">
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="vm:RecipeSummary">
+                    <Grid ColumnDefinitions="*,Auto" Padding="0,6">
+                        <Label Text="{Binding Name}" VerticalOptions="Center" />
+                        <Label Grid.Column="1" Text="{Binding UnitCostText}" FontAttributes="Bold" />
+                    </Grid>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </VerticalStackLayout>
+</ContentPage>

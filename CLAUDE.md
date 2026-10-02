@@ -48,7 +48,8 @@ dotnet test
 dotnet build AtolyeRecete.App -f net9.0-windows10.0.19041.0
 ```
 
-(Çözüm oluşturulunca güncelle.)
+Uygulama şu an sadece Windows hedefli (Android sonra eklenecek). Çalıştırma: `dotnet run --project AtolyeRecete.App -f net9.0-windows10.0.19041.0`.
+Veritabanı: `%LOCALAPPDATA%\User Name\com.atolyerecete.app\Data\atolyerecete.db3` (silinirse seed yeniden yüklenir).
 
 ## Durum
 

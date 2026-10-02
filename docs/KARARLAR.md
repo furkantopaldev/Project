@@ -22,6 +22,12 @@ Neden: sqlite-net decimal'i double yazar, para kuralını bozar. Testlerde kayı
 
 **Testler Data katmanını da kapsar (bellek içi SQLite).** Not: SQLiteAsyncConnection aynı bağlantı dizesi için ortak havuz kullanır; testlerde her veritabanı benzersiz adlı URI ile açılır (AtolyeDatabase.CreateInMemory).
 
+**CommunityToolkit.Maui 12.3.0'da sabit.** Güncel 15.x .NET 10 gerektiriyor; biz net9.0'dayız.
+Neden: NU1202 uyumsuzluk hatası. .NET 10'a geçilirse birlikte yükseltilir.
+
+**MAUI hedefi şimdilik sadece net9.0-windows10.0.19041.0.** Android/iOS/Mac hedefleri csproj'dan çıkarıldı.
+Neden: demo Windows'ta; gereksiz iş yükü derlenmesin. Android için csproj'a net9.0-android eklenir.
+
 **Çalışma şekli: faz faz, adım adım ilerlenir. Proje bitince dosya dosya anlatan bir .md (ör. docs/KOD_REHBERI.md) hazırlanacak.**
 
 ## 2026-10-02 İlk planlama oturumu
