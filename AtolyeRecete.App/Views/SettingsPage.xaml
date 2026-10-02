@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="AtolyeRecete.App.Views.SettingsPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:vm="clr-namespace:AtolyeRecete.App.ViewModels"
+    x:DataType="vm:SettingsViewModel"
+    Title="Ayarlar">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="24" Spacing="12" MaximumWidthRequest="900" HorizontalOptions="Fill">
+
+            <Label Text="Maliyet varsayılanları" FontAttributes="Bold" FontSize="18" />
+
+            <Label Text="Saatlik işçilik ücreti (₺)" />
+            <Entry Text="{Binding HourlyRateText}" Keyboard="Numeric" MaximumWidthRequest="300" HorizontalOptions="Start" />
+            <Label
+                Text="Tüm reçetelerde işçilik maliyeti bu ücretle hesaplanır. Değiştirince tüm reçeteler ve fiyat önerileri yeni ücretle yeniden hesaplanır."
+                FontSize="12" TextColor="Gray" />
+
+            <Label Text="Yeni reçeteler için genel gider (%)" Margin="0,8,0,0" />
+            <Entry Text="{Binding OverheadPercentText}" Keyboard="Numeric" MaximumWidthRequest="300" HorizontalOptions="Start" />
+            <Label
+                Text="Yalnızca yeni oluşturulan reçetelerin başlangıç değeridir; mevcut reçeteleri değiştirmez."
+                FontSize="12" TextColor="Gray" />
+
+            <Button Text="Kaydet" Command="{Binding SaveCommand}" HorizontalOptions="Start" Margin="0,8,0,0" />
+
+            <Label Text="{Binding ErrorMessage}" TextColor="Red" IsVisible="{Binding HasError}" />
+            <Label Text="{Binding StatusMessage}" TextColor="Green" IsVisible="{Binding HasStatus}" />
+
+            <Label Text="Veriler" FontAttributes="Bold" FontSize="18" Margin="0,24,0,0" />
+            <Label Text="{Binding DataSummary}" />
+            <HorizontalStackLayout Spacing="12">
+                <Button Text="Örnek verileri yükle" Command="{Binding LoadSampleCommand}" />
+                <Button
+                    Text="Tüm verileri sil"
+                    Command="{Binding ClearAllCommand}"
+                    BackgroundColor="Firebrick"
+                    TextColor="White" />
+            </HorizontalStackLayout>
+            <Label
+                Text="Örnek veriler yalnızca veritabanı boşken yüklenir. Örnek paket ilk açılışta bir kez otomatik yüklenir; sildikten sonra kendiliğinden geri gelmez."
+                FontSize="12" TextColor="Gray" Margin="0,0,0,24" />
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

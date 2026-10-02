@@ -3,9 +3,9 @@ using AtolyeRecete.Data;
 namespace AtolyeRecete.App.Services;
 
 /// <summary>
-/// Veritabanını kurar ve boşsa örnek veriyi yükler. Birden çok ekran çağırabilir; iş bir kez yapılır.
+/// Veritabanını kurar ve ilk çalıştırmada örnek veriyi yükler. Birden çok ekran çağırabilir; iş bir kez yapılır.
 /// </summary>
-public class StartupService(AtolyeDatabase db, SeedService seed)
+public class StartupService(AtolyeDatabase db, SeedService seed, AppSettings settings)
 {
     private Task? _initialization;
 
@@ -14,6 +14,12 @@ public class StartupService(AtolyeDatabase db, SeedService seed)
     private async Task InitializeAsync()
     {
         await db.InitializeAsync();
-        await seed.SeedIfEmptyAsync();
+
+        // Örnek veri yalnızca ilk çalıştırmada: kullanıcı silerse bir sonraki açılışta geri gelmez.
+        if (!settings.SeedApplied)
+        {
+            await seed.SeedIfEmptyAsync();
+            settings.SeedApplied = true;
+        }
     }
 }

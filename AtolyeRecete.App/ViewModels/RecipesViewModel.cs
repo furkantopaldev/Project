@@ -11,6 +11,7 @@ public record RecipeListItem(int Id, string Name, string DetailText, string Unit
 
 public partial class RecipesViewModel(
     StartupService startup,
+    AppSettings settings,
     IRecipeRepository repository) : ObservableObject
 {
     public ObservableCollection<RecipeListItem> Items { get; } = new();
@@ -34,7 +35,7 @@ public partial class RecipesViewModel(
         foreach (var r in await repository.GetAllAsync())
         {
             // Hesap Core'da; burada sadece biçimlendirme.
-            var unitCost = CostCalculator.UnitCost(r, AppDefaults.HourlyRate);
+            var unitCost = CostCalculator.UnitCost(r, settings.HourlyRate);
             Items.Add(new RecipeListItem(
                 r.Id,
                 r.Name,

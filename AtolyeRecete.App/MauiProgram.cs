@@ -30,6 +30,7 @@ public static class MauiProgram
 		builder.Services.AddSingleton<SeedService>();
 		builder.Services.AddSingleton<StartupService>();
 		builder.Services.AddSingleton<PlatformService>();
+		builder.Services.AddSingleton<AppSettings>();
 
 		// Ekranlar
 		builder.Services.AddTransient<HomeViewModel>();
@@ -44,6 +45,8 @@ public static class MauiProgram
 		builder.Services.AddTransient<RecipeEditPage>();
 		builder.Services.AddTransient<SimulatorViewModel>();
 		builder.Services.AddTransient<SimulatorPage>();
+		builder.Services.AddTransient<SettingsViewModel>();
+		builder.Services.AddTransient<SettingsPage>();
 
 #if DEBUG
 		builder.Logging.AddDebug();

@@ -16,6 +16,7 @@ public record PlatformPriceRow(string Name, string CommissionText, string PriceT
 
 public partial class SimulatorViewModel(
     StartupService startup,
+    AppSettings settings,
     IRecipeRepository recipeRepository,
     PlatformService platformService) : ObservableObject
 {
@@ -147,7 +148,7 @@ public partial class SimulatorViewModel(
         decimal unitCost;
         try
         {
-            unitCost = CostCalculator.UnitCost(SelectedRecipe, AppDefaults.HourlyRate);
+            unitCost = CostCalculator.UnitCost(SelectedRecipe, settings.HourlyRate);
         }
         catch (InvalidOperationException ex)
         {

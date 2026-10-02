@@ -23,6 +23,10 @@
             Title="Simülatör"
             ContentTemplate="{DataTemplate views:SimulatorPage}"
             Route="SimulatorPage" />
+        <ShellContent
+            Title="Ayarlar"
+            ContentTemplate="{DataTemplate views:SettingsPage}"
+            Route="SettingsPage" />
     </TabBar>
 
 </Shell>

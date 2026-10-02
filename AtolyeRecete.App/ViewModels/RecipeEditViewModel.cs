@@ -10,6 +10,7 @@ namespace AtolyeRecete.App.ViewModels;
 
 public partial class RecipeEditViewModel(
     StartupService startup,
+    AppSettings settings,
     IRecipeRepository recipes,
     IIngredientRepository ingredients) : ObservableObject, IQueryAttributable
 {
@@ -64,7 +65,7 @@ public partial class RecipeEditViewModel(
         {
             ErrorMessage = "";
             _allIngredients = await ingredients.GetAllAsync();
-            HourlyRateText = $"Saatlik işçilik ücreti: {Display.Money(AppDefaults.HourlyRate)}";
+            HourlyRateText = $"Saatlik işçilik ücreti: {Display.Money(settings.HourlyRate)}";
             Items.Clear();
 
             if (!IsExisting)
@@ -72,7 +73,7 @@ public partial class RecipeEditViewModel(
                 Name = "";
                 YieldText = "1";
                 LaborMinutesText = "0";
-                OverheadPercentText = "10";
+                OverheadPercentText = Display.NumberText(settings.DefaultOverheadPercentValue);
                 return;
             }
 
@@ -202,7 +203,7 @@ public partial class RecipeEditViewModel(
             OverheadRate = Display.RateFromPercent(Display.ParseOrZero(OverheadPercentText)),
             Items = Items.Select(i => i.ToPreviewModel()).OfType<RecipeItem>().ToList()
         };
-        var rate = AppDefaults.HourlyRate;
+        var rate = settings.HourlyRate;
 
         MaterialCostText = Display.Money(CostCalculator.MaterialCost(recipe));
         LaborCostText = Display.Money(CostCalculator.LaborCost(recipe, rate));

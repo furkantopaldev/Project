@@ -12,6 +12,7 @@ public record RecipeSummary(string Name, string UnitCostText);
 
 public partial class HomeViewModel(
     StartupService startup,
+    AppSettings settings,
     IIngredientRepository ingredients,
     IRecipeRepository recipes) : ObservableObject
 {
@@ -37,7 +38,7 @@ public partial class HomeViewModel(
         foreach (var recipe in all)
         {
             // Hesap Core'da; burada sadece biçimlendirme.
-            var unitCost = Money.Round(CostCalculator.UnitCost(recipe, AppDefaults.HourlyRate));
+            var unitCost = Money.Round(CostCalculator.UnitCost(recipe, settings.HourlyRate));
             Recipes.Add(new RecipeSummary(recipe.Name, unitCost.ToString("C2", AppDefaults.Culture)));
         }
     }
