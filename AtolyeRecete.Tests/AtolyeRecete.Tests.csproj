@@ -21,6 +21,7 @@
   <ItemGroup>
     <ProjectReference Include="..\AtolyeRecete.Core\AtolyeRecete.Core.csproj" />
     <ProjectReference Include="..\AtolyeRecete.Data\AtolyeRecete.Data.csproj" />
+    <ProjectReference Include="..\AtolyeRecete.Pdf\AtolyeRecete.Pdf.csproj" />
   </ItemGroup>
 
 </Project>

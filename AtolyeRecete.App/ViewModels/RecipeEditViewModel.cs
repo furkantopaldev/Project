@@ -219,7 +219,7 @@ public partial class RecipeEditViewModel(
         MarginText = $"Bu fiyatla marj: {Display.PercentLabel(margin)} · kâr: {Display.Money(salePrice - cost)} (komisyon öncesi)";
 
         var threshold = settings.MarginWarningPercentValue;
-        if (margin * 100m < threshold)
+        if (MarginAlerts.IsBelowThreshold(margin, Display.RateFromPercent(threshold)))
             MarginWarning = margin < 0m
                 ? "Satış fiyatı maliyetin altında: zararına satış."
                 : $"Marj, uyarı eşiğinin (%{Display.NumberText(threshold)}) altında.";

@@ -16,8 +16,9 @@ Amaç şu an: öğrenme + sunum için çalışan, güzel bir MVP. Pazar doğrula
 ```
 AtolyeRecete.Core   -> domain modelleri + hesap motoru. Saf C#, MAUI/SQLite bağımlılığı YOK.
 AtolyeRecete.Data   -> SQLite repository'leri, SeedService
+AtolyeRecete.Pdf    -> QuestPDF ile müşteri fiyat listesi PDF'i (MAUI'den bağımsız, testli)
 AtolyeRecete.App    -> MAUI: Views, ViewModels, Shell
-AtolyeRecete.Tests  -> Core ve Data için xUnit testleri
+AtolyeRecete.Tests  -> Core, Data ve Pdf için xUnit testleri
 ```
 
 ## Kesin kurallar
@@ -56,4 +57,4 @@ Veritabanı: `%LOCALAPPDATA%\User Name\com.atolyerecete.app\Data\atolyerecete.db
 - [x] Faz 1: Core hesap motoru + testler (testler yeşil)
 - [x] Faz 2: Data katmanı + hammadde/reçete ekranları
 - [x] Faz 3: Pazaryeri simülatörü (66 test yeşil)
-- [ ] Faz 4: PDF + fiyat güncelleme + sunum cilası
+- [x] Faz 4: PDF + fiyat güncelleme (marj uyarısı) + sunum cilası (demo betiği: `docs/SUNUM_AKISI.md`)

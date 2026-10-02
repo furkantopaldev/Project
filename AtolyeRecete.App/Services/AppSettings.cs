@@ -15,6 +15,7 @@ public class AppSettings
     private const string HourlyRateKey = "hourlyRate";
     private const string OverheadKey = "defaultOverheadPercent";
     private const string MarginWarningKey = "marginWarningPercent";
+    private const string BusinessNameKey = "businessName";
     private const string SeedAppliedKey = "seedApplied";
 
     /// <summary>Saatlik işçilik ücreti (₺). İşçilik maliyeti bununla hesaplanır.</summary>
@@ -36,6 +37,13 @@ public class AppSettings
     {
         get => ReadDecimal(MarginWarningKey, DefaultMarginWarningPercent);
         set => WriteDecimal(MarginWarningKey, value);
+    }
+
+    /// <summary>İşletme adı; müşteriye giden fiyat listesi PDF'inin başlığında görünür. Boş olabilir.</summary>
+    public string BusinessName
+    {
+        get => Preferences.Default.Get(BusinessNameKey, "");
+        set => Preferences.Default.Set(BusinessNameKey, value ?? "");
     }
 
     /// <summary>

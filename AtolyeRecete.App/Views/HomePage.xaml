@@ -7,25 +7,103 @@
     x:DataType="vm:HomeViewModel"
     Title="Ana Sayfa">
 
-    <VerticalStackLayout Padding="24" Spacing="16">
-        <Label Text="AtölyeReçete" FontSize="28" FontAttributes="Bold" />
+    <ScrollView>
+        <VerticalStackLayout Padding="24" Spacing="16" MaximumWidthRequest="900" HorizontalOptions="Fill">
 
-        <HorizontalStackLayout Spacing="24">
-            <Label Text="{Binding IngredientCount, StringFormat='Hammadde: {0}'}" FontSize="16" />
-            <Label Text="{Binding RecipeCount, StringFormat='Reçete: {0}'}" FontSize="16" />
-        </HorizontalStackLayout>
+            <VerticalStackLayout Spacing="2">
+                <Label Text="AtölyeReçete" FontSize="30" FontAttributes="Bold" TextColor="{StaticResource Primary}" />
+                <Label Text="{Binding Subtitle}" FontSize="14" TextColor="Gray" />
+            </VerticalStackLayout>
 
-        <Label Text="Reçeteler (birim maliyet)" FontSize="18" FontAttributes="Bold" />
+            <!-- Özet kartları -->
+            <Grid ColumnDefinitions="*,*,*,*" ColumnSpacing="12">
+                <Border Padding="14" StrokeShape="RoundRectangle 12" StrokeThickness="0"
+                        BackgroundColor="{AppThemeBinding Light={StaticResource Secondary}, Dark={StaticResource Gray900}}">
+                    <VerticalStackLayout>
+                        <Label Text="{Binding IngredientCount}" FontSize="28" FontAttributes="Bold" />
+                        <Label Text="Hammadde" FontSize="12" TextColor="Gray" />
+                    </VerticalStackLayout>
+                </Border>
+                <Border Grid.Column="1" Padding="14" StrokeShape="RoundRectangle 12" StrokeThickness="0"
+                        BackgroundColor="{AppThemeBinding Light={StaticResource Secondary}, Dark={StaticResource Gray900}}">
+                    <VerticalStackLayout>
+                        <Label Text="{Binding RecipeCount}" FontSize="28" FontAttributes="Bold" />
+                        <Label Text="Reçete" FontSize="12" TextColor="Gray" />
+                    </VerticalStackLayout>
+                </Border>
+                <Border Grid.Column="2" Padding="14" StrokeShape="RoundRectangle 12" StrokeThickness="0"
+                        BackgroundColor="{AppThemeBinding Light={StaticResource Secondary}, Dark={StaticResource Gray900}}">
+                    <VerticalStackLayout>
+                        <Label Text="{Binding PriceListText}" FontSize="28" FontAttributes="Bold" />
+                        <Label Text="Fiyat listesinde" FontSize="12" TextColor="Gray" />
+                    </VerticalStackLayout>
+                </Border>
+                <Border Grid.Column="3" Padding="14" StrokeShape="RoundRectangle 12" StrokeThickness="0"
+                        BackgroundColor="{AppThemeBinding Light={StaticResource Secondary}, Dark={StaticResource Gray900}}">
+                    <VerticalStackLayout>
+                        <Label Text="{Binding HourlyRateText}" FontSize="18" FontAttributes="Bold" VerticalOptions="Center" />
+                        <Label Text="İşçilik ücreti" FontSize="12" TextColor="Gray" />
+                    </VerticalStackLayout>
+                </Border>
+            </Grid>
 
-        <CollectionView ItemsSource="{Binding Recipes}">
-            <CollectionView.ItemTemplate>
-                <DataTemplate x:DataType="vm:RecipeSummary">
-                    <Grid ColumnDefinitions="*,Auto" Padding="0,6">
-                        <Label Text="{Binding Name}" VerticalOptions="Center" />
-                        <Label Grid.Column="1" Text="{Binding UnitCostText}" FontAttributes="Bold" />
-                    </Grid>
-                </DataTemplate>
-            </CollectionView.ItemTemplate>
-        </CollectionView>
-    </VerticalStackLayout>
+            <!-- Dikkat gerektirenler -->
+            <Border Padding="14" StrokeShape="RoundRectangle 12" StrokeThickness="1" Stroke="DarkOrange"
+                    IsVisible="{Binding HasAttention}">
+                <VerticalStackLayout Spacing="6">
+                    <Label Text="Dikkat gerektirenler" FontAttributes="Bold" TextColor="DarkOrange" />
+                    <VerticalStackLayout Spacing="4" BindableLayout.ItemsSource="{Binding Attention}">
+                        <BindableLayout.ItemTemplate>
+                            <DataTemplate x:DataType="vm:AttentionItem">
+                                <Label Text="{Binding Text}" />
+                            </DataTemplate>
+                        </BindableLayout.ItemTemplate>
+                    </VerticalStackLayout>
+                    <Label Text="{Binding ThresholdText}" FontSize="12" TextColor="Gray" />
+                </VerticalStackLayout>
+            </Border>
+
+            <Border Padding="14" StrokeShape="RoundRectangle 12" StrokeThickness="1" Stroke="Green"
+                    IsVisible="{Binding ShowAllGood}">
+                <Label Text="Her şey yolunda: tüm reçetelerin satış fiyatı girilmiş ve marjları eşiğin üzerinde."
+                       TextColor="Green" />
+            </Border>
+
+            <!-- Reçete tablosu -->
+            <Label Text="Reçeteler" FontAttributes="Bold" FontSize="18" Margin="0,8,0,0" />
+            <Label Text="Henüz reçete yok. Reçeteler sekmesinden ekleyebilir ya da Ayarlar'dan örnek verileri yükleyebilirsin."
+                   FontSize="12" TextColor="Gray">
+                <Label.Triggers>
+                    <DataTrigger TargetType="Label" Binding="{Binding HasRecipes}" Value="True">
+                        <Setter Property="IsVisible" Value="False" />
+                    </DataTrigger>
+                </Label.Triggers>
+            </Label>
+
+            <Grid ColumnDefinitions="3*,*,*,*" ColumnSpacing="8" IsVisible="{Binding HasRecipes}">
+                <Label Text="Reçete" FontSize="12" TextColor="Gray" />
+                <Label Grid.Column="1" Text="Maliyet" FontSize="12" TextColor="Gray" HorizontalTextAlignment="End" />
+                <Label Grid.Column="2" Text="Satış" FontSize="12" TextColor="Gray" HorizontalTextAlignment="End" />
+                <Label Grid.Column="3" Text="Marj" FontSize="12" TextColor="Gray" HorizontalTextAlignment="End" />
+            </Grid>
+            <VerticalStackLayout Spacing="6" BindableLayout.ItemsSource="{Binding Recipes}">
+                <BindableLayout.ItemTemplate>
+                    <DataTemplate x:DataType="vm:RecipeSummary">
+                        <Grid ColumnDefinitions="3*,*,*,*" ColumnSpacing="8">
+                            <Label Text="{Binding Name}" />
+                            <Label Grid.Column="1" Text="{Binding UnitCostText}" HorizontalTextAlignment="End" />
+                            <Label Grid.Column="2" Text="{Binding SalePriceText}" HorizontalTextAlignment="End" />
+                            <Label Grid.Column="3" Text="{Binding MarginText}" FontAttributes="Bold" HorizontalTextAlignment="End">
+                                <Label.Triggers>
+                                    <DataTrigger TargetType="Label" Binding="{Binding IsLow}" Value="True">
+                                        <Setter Property="TextColor" Value="DarkOrange" />
+                                    </DataTrigger>
+                                </Label.Triggers>
+                            </Label>
+                        </Grid>
+                    </DataTemplate>
+                </BindableLayout.ItemTemplate>
+            </VerticalStackLayout>
+        </VerticalStackLayout>
+    </ScrollView>
 </ContentPage>

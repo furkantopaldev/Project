@@ -31,6 +31,14 @@ public class MarginAlertsTests
     private static IReadOnlyList<MarginDrop> Find(Recipe[] before, Recipe[] after) =>
         MarginAlerts.FindDrops(before, after, HourlyRate, Threshold);
 
+    [Theory]
+    [InlineData(0.29, true)]
+    [InlineData(0.30, false)]   // eşit: düşük sayılmaz
+    [InlineData(0.31, false)]
+    [InlineData(-0.50, true)]   // zararına satış
+    public void IsBelowThreshold_IsStrict(double margin, bool expected) =>
+        Assert.Equal(expected, MarginAlerts.IsBelowThreshold((decimal)margin, Threshold));
+
     [Fact]
     public void PriceRise_PushesMarginBelowThreshold_IsReported()
     {

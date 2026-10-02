@@ -24,6 +24,10 @@
             ContentTemplate="{DataTemplate views:SimulatorPage}"
             Route="SimulatorPage" />
         <ShellContent
+            Title="Fiyat listesi"
+            ContentTemplate="{DataTemplate views:PriceListPage}"
+            Route="PriceListPage" />
+        <ShellContent
             Title="Ayarlar"
             ContentTemplate="{DataTemplate views:SettingsPage}"
             Route="SettingsPage" />

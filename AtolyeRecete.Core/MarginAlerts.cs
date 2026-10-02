@@ -15,6 +15,14 @@ public record MarginDrop(
 public static class MarginAlerts
 {
     /// <summary>
+    /// Marj, eşiğin kesinlikle altında mı? Eşit marj düşük sayılmaz.
+    /// Tüm "düşük marj" göstergeleri (liste, düzenleme, ana sayfa, uyarı) bu kuralı kullanır.
+    /// </summary>
+    /// <param name="margin">Marj, kesir olarak (0.25 = %25; negatif olabilir).</param>
+    /// <param name="thresholdRate">Eşik, kesir olarak (0.30 = %30).</param>
+    public static bool IsBelowThreshold(decimal margin, decimal thresholdRate) => margin < thresholdRate;
+
+    /// <summary>
     /// Değişiklik öncesi ve sonrası reçete listelerini (Id ile eşleşir) karşılaştırır.
     /// Bir reçete listeye girer, ancak ve ancak: satış fiyatı varsa, marjı kötüleştiyse
     /// ve yeni marj eşiğin kesinlikle altındaysa. Eşit marj uyarı vermez.
@@ -46,7 +54,7 @@ public static class MarginAlerts
             var marginBefore = PricingCalculator.MarginAtPrice(costBefore, oldPrice);
             var marginAfter = PricingCalculator.MarginAtPrice(costAfter, newPrice);
 
-            if (marginAfter < marginBefore && marginAfter < thresholdRate)
+            if (marginAfter < marginBefore && IsBelowThreshold(marginAfter, thresholdRate))
                 drops.Add(new MarginDrop(
                     recipe.Id, recipe.Name, newPrice, costBefore, costAfter, marginBefore, marginAfter));
         }

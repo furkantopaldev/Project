@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="AtolyeRecete.App.Views.PriceListPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:vm="clr-namespace:AtolyeRecete.App.ViewModels"
+    x:DataType="vm:PriceListViewModel"
+    Title="Fiyat listesi">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="24" Spacing="12" MaximumWidthRequest="900" HorizontalOptions="Fill">
+
+            <Label
+                Text="Müşteriye gönderebileceğin fiyat listesi. Yalnızca ürün adı ve satış fiyatı yer alır; maliyet ve marj paylaşılmaz. Yalnızca satış fiyatı girilmiş reçeteler listeye girer."
+                FontSize="12" TextColor="Gray" />
+
+            <Label Text="{Binding Summary}" FontAttributes="Bold" />
+
+            <Label Text="Listede olacak ürünler" FontSize="12" TextColor="Gray" Margin="0,8,0,0" />
+            <VerticalStackLayout Spacing="4" BindableLayout.ItemsSource="{Binding Rows}">
+                <BindableLayout.ItemTemplate>
+                    <DataTemplate x:DataType="vm:PriceListRow">
+                        <Grid ColumnDefinitions="*,Auto" Padding="0,4">
+                            <Label Text="{Binding Name}" />
+                            <Label Grid.Column="1" Text="{Binding PriceText}" FontAttributes="Bold" />
+                        </Grid>
+                    </DataTemplate>
+                </BindableLayout.ItemTemplate>
+            </VerticalStackLayout>
+
+            <Button
+                Text="PDF oluştur"
+                Command="{Binding CreatePdfCommand}"
+                IsEnabled="{Binding CanCreate}"
+                HorizontalOptions="Start"
+                Margin="0,12,0,0" />
+
+            <Label Text="{Binding ErrorMessage}" TextColor="Red" IsVisible="{Binding HasError}" />
+            <Label Text="{Binding StatusMessage}" TextColor="Green" IsVisible="{Binding HasStatus}" />
+
+            <VerticalStackLayout Spacing="8" IsVisible="{Binding HasPdf}">
+                <Label Text="{Binding PdfPath}" FontSize="12" TextColor="Gray" />
+                <HorizontalStackLayout Spacing="12">
+                    <Button Text="Aç" Command="{Binding OpenCommand}" />
+                    <Button Text="Paylaş" Command="{Binding ShareCommand}" />
+                </HorizontalStackLayout>
+            </VerticalStackLayout>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

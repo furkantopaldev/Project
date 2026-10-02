@@ -16,6 +16,7 @@ public partial class SettingsViewModel(
     [ObservableProperty] private string _hourlyRateText = "";
     [ObservableProperty] private string _overheadPercentText = "";
     [ObservableProperty] private string _marginWarningText = "";
+    [ObservableProperty] private string _businessNameText = "";
     [ObservableProperty] private string _dataSummary = "";
 
     [ObservableProperty]
@@ -37,6 +38,7 @@ public partial class SettingsViewModel(
         HourlyRateText = Display.NumberText(settings.HourlyRate);
         OverheadPercentText = Display.NumberText(settings.DefaultOverheadPercentValue);
         MarginWarningText = Display.NumberText(settings.MarginWarningPercentValue);
+        BusinessNameText = settings.BusinessName;
         ErrorMessage = "";
         StatusMessage = "";
         await RefreshSummaryAsync();
@@ -65,6 +67,7 @@ public partial class SettingsViewModel(
             return;
         }
 
+        settings.BusinessName = BusinessNameText.Trim();
         settings.HourlyRate = hourlyRate;
         settings.MarginWarningPercentValue = marginWarning;
         settings.DefaultOverheadPercentValue = overheadPercent;

@@ -42,7 +42,7 @@ public partial class RecipesViewModel(
             {
                 var margin = PricingCalculator.MarginAtPrice(unitCost, salePrice);
                 detail += $" · satış {Display.Money(salePrice)} · marj {Display.PercentLabel(margin)}";
-                if (margin * 100m < settings.MarginWarningPercentValue)
+                if (MarginAlerts.IsBelowThreshold(margin, Display.RateFromPercent(settings.MarginWarningPercentValue)))
                     detail += " ⚠ düşük";
             }
 

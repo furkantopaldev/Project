@@ -55,6 +55,26 @@ Neden: "marj düştü" uyarısı ve müşteri fiyat listesi PDF'i (Faz 4) için 
 **Marj düşüş uyarısı, hammadde kaydedilirken çalışır (`MarginAlerts.FindDrops`, Core).** Kayıttan önce ve sonra tüm reçeteler yüklenir, karşılaştırılır. Reçete uyarı listesine girer ancak ve ancak: satış fiyatı varsa, marj kötüleştiyse ve yeni marj eşiğin kesinlikle altındaysa.
 Neden: sadece "eşiğin altında" demek, zaten düşük ve hiç değişmemiş reçeteler için her kayıtta gürültü üretirdi; sadece "düştü" demek de küçük, zararsız oynamalar için uyarırdı. Yeni hammadde eklemek uyarı üretmez (hiçbir reçetede kullanılamaz). Hammadde silme zaten reçetede kullanılıyorsa engelli.
 
+**PDF üretimi ayrı proje: `AtolyeRecete.Pdf` (QuestPDF, yalnızca Core'a bağlı).** Hangi reçetelerin listeye gireceği ve sıralama Core'da (`PriceListBuilder`, testli); çizim Pdf projesinde.
+Neden: Core saf kalsın, MAUI'siz test edilebilsin (testler PDF'i gerçekten üretir; eksik glif, ör. ₺ veya Türkçe harf, QuestPDF'te hata verdiği için yakalanır).
+
+**Fiyat listesi PDF'i: yalnızca satış fiyatı girilmiş (> 0) reçeteler, Türkçe alfabeye göre sıralı; yalnızca ürün adı ve fiyat içerir (maliyet/marj yok), "Fiyatlar KDV hariçtir." notu taşır.** Fiyatı olmayanlar listeye girmez, ekranda kaç tane atlandığı yazar.
+Neden: müşteriye maliyet gösterilmez (ilk plan kararı); fiyatsız satırlar müşteri listesinde boş görünürdü.
+
+**PDF Belgelerim\AtolyeRecete\ altına `Fiyat-Listesi-YYYY-AA-GG.pdf` olarak kaydedilir (aynı gün üzerine yazar); "Aç" varsayılan PDF okuyucuyla açar, "Paylaş" MAUI Share API'sini kullanır.** İşletme adı Ayarlar'dan girilir, boşsa başlık yalnızca "Fiyat Listesi".
+Açık nokta: Windows'ta paketlenmemiş uygulamada Paylaş çalışmayabilir; çalışmazsa kullanıcıya "Aç ile açıp oradan gönder" mesajı gösterilir. Android'e geçince Paylaş birincil yol olacak.
+
+**QuestPDF Community lisansı kullanılıyor** (yıllık geliri 1 milyon USD altı işletmeler, öğrenciler, kâr amacı gütmeyenler için ücretsiz). Ticari büyümede lisans yeniden değerlendirilir.
+
+**"Marj eşiğin altında mı" kuralı tek yerde: `MarginAlerts.IsBelowThreshold` (Core, kesin küçüktür; eşit marj düşük sayılmaz).** Reçete listesi, reçete düzenleme, Ana Sayfa ve marj uyarısı aynı kuralı kullanır.
+Neden: kural dört ekranda ayrı ayrı yazılırsa zamanla birbirinden ayrışır.
+
+**Ana Sayfa özet ekranıdır:** hammadde/reçete sayısı, "fiyat listesinde x / y", saatlik ücret, "dikkat gerektirenler" (marjı eşiğin altında olan ve satış fiyatı girilmemiş reçeteler) ve maliyet/satış/marj tablosu. Hepsi güvende ise yeşil "Her şey yolunda" kutusu görünür.
+
+**Marka: ana renk yanık turuncu `#A8501C`, mum simgesi ve açılış ekranı.** Şablonun mor rengi, macenta sekme rengi ve .NET logosu kaldırıldı.
+
+**Sunum betiği `docs/SUNUM_AKISI.md`:** hazırlık adımları, rakamlarıyla demo akışı, bilinen sınırlar ve olası zor sorular. Rakamlar uygulamada doğrulandı.
+
 **Çalışma şekli: faz faz, adım adım ilerlenir. Proje bitince dosya dosya anlatan bir .md (ör. docs/KOD_REHBERI.md) hazırlanacak.**
 
 ## 2026-10-02 İlk planlama oturumu
