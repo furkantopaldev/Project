@@ -6,7 +6,7 @@ Amaç şu an: öğrenme + sunum için çalışan, güzel bir MVP. Pazar doğrula
 
 ## Teknoloji
 
-- .NET MAUI (.NET 8/9), MVVM, `CommunityToolkit.Mvvm` (source generators), `CommunityToolkit.Maui`
+- .NET MAUI (.NET 9), MVVM, `CommunityToolkit.Mvvm` (source generators), `CommunityToolkit.Maui`
 - Yerel veri: `sqlite-net-pcl` (backend YOK, MVP'de eklenmeyecek)
 - PDF: QuestPDF (müşteriye giden fiyat listesi)
 - Testler: xUnit (sadece Core projesi)
@@ -45,7 +45,7 @@ Yok (sonra): stok bildirimi, sipariş kuyruğu, çoklu para birimi, barkod, hesa
 
 ```
 dotnet test AtolyeRecete.Tests
-dotnet build AtolyeRecete.App -f net8.0-android
+dotnet build AtolyeRecete.App -f net9.0-windows10.0.19041.0
 ```
 
 (Çözüm oluşturulunca güncelle.)

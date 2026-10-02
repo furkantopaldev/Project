@@ -2,6 +2,20 @@
 
 Format: tarih, karar, neden. Yeni karar en üste eklenir.
 
+## 2026-10-02 Faz 1 öncesi netleştirmeler
+
+**Fire sadece kalem bazında.** Genel gider payı fireyi içermez (elektrik, ambalaj vb. için).
+Neden: aynı kayıp iki kez sayılmasın. Sorun çıkarsa yeniden değerlendirilir.
+
+**Demo hedefi: Windows (maui-windows).** Android sonra, ilerleyen aşamada eklenecek.
+Neden: makinede hazır, emülatör kurulumu gerekmez.
+
+**Hedef çatı: net9.0** (makinede SDK 9.0.318). CLAUDE.md komutları buna göre güncellendi.
+
+**Hammadde tek birimde tutulur (g, ml, adet); birim dönüşümü MVP'de yok.**
+
+**Çalışma şekli: faz faz, adım adım ilerlenir; fazlar bitince yazılan kod kullanıcıya anlatılır.**
+
 ## 2026-10-02 İlk planlama oturumu
 
 **Hedef:** Şu anki amaç öğrenme ve sunum. Sunum onaylanırsa üretici görüşmeleri ve doğrulama sonraki aşama.
