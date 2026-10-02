@@ -12,7 +12,7 @@
             ContentTemplate="{DataTemplate views:HomePage}"
             Route="HomePage" />
         <ShellContent
-            Title="Hammaddeler"
+            Title="Hammadde"
             ContentTemplate="{DataTemplate views:IngredientsPage}"
             Route="IngredientsPage" />
         <ShellContent
@@ -24,7 +24,7 @@
             ContentTemplate="{DataTemplate views:SimulatorPage}"
             Route="SimulatorPage" />
         <ShellContent
-            Title="Fiyat listesi"
+            Title="Fiyatlar"
             ContentTemplate="{DataTemplate views:PriceListPage}"
             Route="PriceListPage" />
     </TabBar>

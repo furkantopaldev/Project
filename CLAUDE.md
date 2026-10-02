@@ -51,6 +51,7 @@ dotnet build AtolyeRecete.App -f net9.0-windows10.0.19041.0
 
 Uygulama Windows ve Android hedeflidir (iOS/Mac yok). Windows: `dotnet run --project AtolyeRecete.App -f net9.0-windows10.0.19041.0`.
 Android: önce emülatörü aç (`%LOCALAPPDATA%\Android\Sdk\emulator\emulator.exe -avd Medium_Phone_API_36.0`) ya da telefonu USB hata ayıklamayla bağla, sonra `dotnet build AtolyeRecete.App -f net9.0-android -t:Run`.
+Release APK (hata ayıklama anahtarıyla imzalı; yalnızca test için): `dotnet build AtolyeRecete.App -c Release -f net9.0-android -p:AndroidPackageFormat=apk` → `AtolyeRecete.App/bin/Release/net9.0-android/com.atolyerecete.app-Signed.apk`. Telefona kurmak için: `adb install -r <apk>` ya da dosyayı telefona kopyalayıp "bilinmeyen kaynaklardan kurulum"a izin ver. Mağaza için kendi imzalama anahtarı gerekir.
 Veritabanı: `%LOCALAPPDATA%\User Name\com.atolyerecete.app\Data\atolyerecete.db3`. Örnek veri yalnızca ilk çalıştırmada yüklenir; sıfırlamak için Ayarlar'da "Tüm verileri sil" ve "Örnek verileri yükle".
 
 ## Durum

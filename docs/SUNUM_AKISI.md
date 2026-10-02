@@ -23,7 +23,7 @@ Başlangıç rakamları:
 El yapımı üreticiler fiyatı genelde "komşu ne kadar satıyor"a bakarak koyuyor. Maliyet (fire, işçilik, genel gider) ve pazaryeri komisyonu hesaba girmiyor. Hammadde fiyatı her ay değişiyor ama fiyatlar güncellenmiyor.
 
 ### 2. Hammaddeler (1 dk)
-**Hammaddeler** sekmesi: soya mumu 1000 g = ₺300, yani birim fiyat **₺0,30/g**. Tek birimde (g, ml, adet) tutuluyor.
+**Hammadde** sekmesi: soya mumu 1000 g = ₺300, yani birim fiyat **₺0,30/g**. Tek birimde (g, ml, adet) tutuluyor.
 
 ### 3. Reçete ve canlı maliyet (2 dk)
 **Reçeteler** → "200cc aromaterapi mumu":
@@ -40,7 +40,7 @@ El yapımı üreticiler fiyatı genelde "komşu ne kadar satıyor"a bakarak koyu
 - Kargo/ek sabit ücret kutusuna `20`: marj modunda Trendyol **₺492,75**.
 
 ### 5. Enflasyon modu: hammadde zammı (2 dk)
-**Hammaddeler** → "Soya mumu" → fiyatı `300`'den `1500`'e çıkar → Kaydet:
+**Hammadde** → "Soya mumu" → fiyatı `300`'den `1500`'e çıkar → Kaydet:
 - "Marj uyarısı" penceresi çıkar:
   - 200cc: %60,64 → **%7,84** (maliyet ₺177,10 → ₺414,70)
   - 100cc: %49,69 → **-%0,21** (zararına satış, maliyet ₺125,79 → ₺250,53)
@@ -49,7 +49,7 @@ El yapımı üreticiler fiyatı genelde "komşu ne kadar satıyor"a bakarak koyu
 - İsteğe bağlı: **Ayarlar**'da (⚙, Ana Sayfa sağ üst) saatlik ücreti `200` yap: 200cc maliyeti **₺195,43**, simülatörde Trendyol %40 marj **₺488,58**. Sonra `150`'ye geri al.
 
 ### 6. Müşteri fiyat listesi PDF'i (1 dk)
-**Fiyat listesi** → "PDF oluştur" → "Aç". Vurgu: müşteriye **yalnızca ürün adı ve fiyat** gider; maliyet ve marj paylaşılmaz. Fiyatı girilmemiş reçeteler listeye girmez.
+**Fiyatlar** sekmesi → "PDF oluştur" → "Aç". Vurgu: müşteriye **yalnızca ürün adı ve fiyat** gider; maliyet ve marj paylaşılmaz. Fiyatı girilmemiş reçeteler listeye girmez.
 
 ### 7. Sonraki adım: doğrulama planı (1 dk)
 Bu bir demo; ürün değil. Henüz doğrulanmayan iki risk:

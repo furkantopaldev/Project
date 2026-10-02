@@ -11,20 +11,17 @@
     <ScrollView>
         <VerticalStackLayout Padding="24" Spacing="12" MaximumWidthRequest="900" HorizontalOptions="Fill">
 
-            <Grid ColumnDefinitions="*,*" ColumnSpacing="12" RowDefinitions="Auto,Auto">
-                <Label Text="Reçete" />
-                <Label Grid.Column="1" Text="Platform" />
-                <Picker
-                    Grid.Row="1"
-                    ItemsSource="{Binding Recipes}"
-                    ItemDisplayBinding="{Binding Name, x:DataType=models:Recipe}"
-                    SelectedItem="{Binding SelectedRecipe}" />
-                <Picker
-                    Grid.Row="1" Grid.Column="1"
-                    ItemsSource="{Binding Platforms}"
-                    ItemDisplayBinding="{Binding Name, x:DataType=models:Platform}"
-                    SelectedItem="{Binding SelectedPlatform}" />
-            </Grid>
+            <Label Text="Reçete" />
+            <Picker
+                ItemsSource="{Binding Recipes}"
+                ItemDisplayBinding="{Binding Name, x:DataType=models:Recipe}"
+                SelectedItem="{Binding SelectedRecipe}" />
+
+            <Label Text="Platform" />
+            <Picker
+                ItemsSource="{Binding Platforms}"
+                ItemDisplayBinding="{Binding Name, x:DataType=models:Platform}"
+                SelectedItem="{Binding SelectedPlatform}" />
             <Label Text="{Binding PlatformNote}" FontSize="12" TextColor="Gray" />
 
             <Label Text="Kâr hesabı" />
