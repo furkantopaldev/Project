@@ -154,6 +154,41 @@ public class DataTests
     }
 
     [Fact]
+    public async Task Recipe_SalePrice_RoundTripsIncludingNull()
+    {
+        var (ingredients, recipes, _) = await CreateAsync();
+        var a = NewIngredient();
+        await ingredients.SaveAsync(a);
+        var withPrice = new Recipe { Name = "A", SalePrice = 442.75m, Items = { new RecipeItem { Ingredient = a, Quantity = 1m } } };
+        var withoutPrice = new Recipe { Name = "B", Items = { new RecipeItem { Ingredient = a, Quantity = 1m } } };
+        await recipes.SaveAsync(withPrice);
+        await recipes.SaveAsync(withoutPrice);
+
+        Assert.Equal(442.75m, (await recipes.GetAsync(withPrice.Id))!.SalePrice);
+        Assert.Null((await recipes.GetAsync(withoutPrice.Id))!.SalePrice);
+
+        // Fiyat sonradan kaldırılabilir.
+        withPrice.SalePrice = null;
+        await recipes.SaveAsync(withPrice);
+        Assert.Null((await recipes.GetAsync(withPrice.Id))!.SalePrice);
+    }
+
+    [Fact]
+    public async Task Seed_RecipesHaveSalePricesAboveCost()
+    {
+        var (_, recipes, seed) = await CreateAsync();
+        await seed.SeedIfEmptyAsync();
+
+        foreach (var recipe in await recipes.GetAllAsync())
+        {
+            Assert.NotNull(recipe.SalePrice);
+            Assert.True(
+                PricingCalculator.MarginAtPrice(CostCalculator.UnitCost(recipe, HourlyRate), recipe.SalePrice!.Value) > 0,
+                recipe.Name);
+        }
+    }
+
+    [Fact]
     public async Task Recipe_UpdateReplacesItems()
     {
         var (ingredients, recipes, _) = await CreateAsync();

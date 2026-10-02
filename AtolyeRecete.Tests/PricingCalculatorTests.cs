@@ -66,6 +66,25 @@ public class PricingCalculatorTests
         Assert.InRange(profit / price, 0.399m, 0.401m);
     }
 
+    // --- Verilen satış fiyatında marj ---
+
+    [Theory]
+    [InlineData(354.20, 0.50)]   // 177.10 / 354.20
+    [InlineData(295.1666666667, 0.40)]
+    [InlineData(177.10, 0.00)]   // maliyetine satış
+    public void MarginAtPrice_IsShareOfPrice(double price, double expected) =>
+        Assert.Equal((decimal)expected, Math.Round(PricingCalculator.MarginAtPrice(GoldenUnitCost, (decimal)price), 4));
+
+    [Fact]
+    public void MarginAtPrice_BelowCost_IsNegative() =>
+        Assert.True(PricingCalculator.MarginAtPrice(GoldenUnitCost, 100m) < 0);
+
+    [Theory]
+    [InlineData(0)]
+    [InlineData(-5)]
+    public void MarginAtPrice_NonPositivePrice_Throws(int price) =>
+        Assert.Throws<InvalidOperationException>(() => PricingCalculator.MarginAtPrice(GoldenUnitCost, price));
+
     // --- Kenar durumlar ---
 
     [Theory]

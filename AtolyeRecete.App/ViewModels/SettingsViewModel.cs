@@ -15,6 +15,7 @@ public partial class SettingsViewModel(
 {
     [ObservableProperty] private string _hourlyRateText = "";
     [ObservableProperty] private string _overheadPercentText = "";
+    [ObservableProperty] private string _marginWarningText = "";
     [ObservableProperty] private string _dataSummary = "";
 
     [ObservableProperty]
@@ -35,6 +36,7 @@ public partial class SettingsViewModel(
 
         HourlyRateText = Display.NumberText(settings.HourlyRate);
         OverheadPercentText = Display.NumberText(settings.DefaultOverheadPercentValue);
+        MarginWarningText = Display.NumberText(settings.MarginWarningPercentValue);
         ErrorMessage = "";
         StatusMessage = "";
         await RefreshSummaryAsync();
@@ -57,7 +59,14 @@ public partial class SettingsViewModel(
             return;
         }
 
+        if (!Display.TryParseDecimal(MarginWarningText, out var marginWarning) || marginWarning < 0 || marginWarning >= 100)
+        {
+            ErrorMessage = "Marj uyarı eşiği 0 ile 100 arasında bir sayı olmalı.";
+            return;
+        }
+
         settings.HourlyRate = hourlyRate;
+        settings.MarginWarningPercentValue = marginWarning;
         settings.DefaultOverheadPercentValue = overheadPercent;
         StatusMessage = "Kaydedildi. Tüm reçetelerin maliyeti yeni saatlik ücretle yeniden hesaplanır.";
     }

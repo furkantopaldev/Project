@@ -17,6 +17,16 @@ public static class PricingCalculator
         };
 
     /// <summary>
+    /// Verilen satış fiyatında marj = (fiyat - birim maliyet) / fiyat (komisyon öncesi, kesir olarak).
+    /// Fiyat sıfır veya negatifse <see cref="InvalidOperationException"/> fırlatır.
+    /// Maliyetin altında satışta negatif döner.
+    /// </summary>
+    public static decimal MarginAtPrice(decimal unitCost, decimal salePrice) =>
+        salePrice > 0m
+            ? (salePrice - unitCost) / salePrice
+            : throw new InvalidOperationException("Satış fiyatı sıfırdan büyük olmalı.");
+
+    /// <summary>
     /// Önerilen fiyat ve döküm (komisyon, net kâr, gerçekleşen marj/markup).
     /// Hesaplanamıyorsa <see cref="InvalidOperationException"/> fırlatır.
     /// </summary>

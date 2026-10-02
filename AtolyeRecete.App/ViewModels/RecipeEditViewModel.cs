@@ -30,6 +30,17 @@ public partial class RecipeEditViewModel(
     [ObservableProperty] private string _laborMinutesText = "0";
     [ObservableProperty] private string _overheadPercentText = "10";
 
+    /// <summary>Satış fiyatı (₺, KDV hariç). Boş bırakılabilir.</summary>
+    [ObservableProperty] private string _salePriceText = "";
+
+    [ObservableProperty] private string _marginText = "";
+
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(HasMarginWarning))]
+    private string _marginWarning = "";
+
+    public bool HasMarginWarning => !string.IsNullOrEmpty(MarginWarning);
+
     // Canlı maliyet özeti
     [ObservableProperty] private string _materialCostText = "";
     [ObservableProperty] private string _laborCostText = "";
@@ -47,6 +58,7 @@ public partial class RecipeEditViewModel(
     partial void OnYieldTextChanged(string value) => Recalculate();
     partial void OnLaborMinutesTextChanged(string value) => Recalculate();
     partial void OnOverheadPercentTextChanged(string value) => Recalculate();
+    partial void OnSalePriceTextChanged(string value) => Recalculate();
 
     public void ApplyQueryAttributes(IDictionary<string, object> query)
     {
@@ -74,6 +86,7 @@ public partial class RecipeEditViewModel(
                 YieldText = "1";
                 LaborMinutesText = "0";
                 OverheadPercentText = Display.NumberText(settings.DefaultOverheadPercentValue);
+                SalePriceText = "";
                 return;
             }
 
@@ -88,6 +101,7 @@ public partial class RecipeEditViewModel(
             YieldText = Display.NumberText(recipe.Yield);
             LaborMinutesText = Display.NumberText(recipe.LaborMinutes);
             OverheadPercentText = Display.PercentText(recipe.OverheadRate);
+            SalePriceText = recipe.SalePrice is { } price ? Display.NumberText(price) : "";
 
             foreach (var item in recipe.Items)
             {
@@ -130,6 +144,7 @@ public partial class RecipeEditViewModel(
             Yield = yield,
             LaborMinutes = labor,
             OverheadRate = Display.RateFromPercent(overheadPercent),
+            SalePrice = Display.TryParseDecimal(SalePriceText, out var salePrice) ? salePrice : null, // doğrulandı: boş ya da > 0
             Items = Items.Select(i => i.ToPreviewModel()!).ToList()
         };
 
@@ -175,6 +190,9 @@ public partial class RecipeEditViewModel(
             return "İşçilik süresi geçerli bir sayı olmalı (0 veya daha büyük).";
         if (!Display.TryParseDecimal(OverheadPercentText, out overheadPercent) || overheadPercent < 0)
             return "Genel gider % geçerli bir sayı olmalı (0 veya daha büyük).";
+        if (!string.IsNullOrWhiteSpace(SalePriceText)
+            && (!Display.TryParseDecimal(SalePriceText, out var salePrice) || salePrice <= 0))
+            return "Satış fiyatı boş bırakılabilir; girilirse sıfırdan büyük bir sayı olmalı.";
         if (Items.Count == 0)
             return "Reçetede en az bir kalem olmalı.";
 
@@ -184,6 +202,27 @@ public partial class RecipeEditViewModel(
             if (itemError is not null) return itemError;
         }
         return null;
+    }
+
+    /// <summary>Satış fiyatı girildiyse bu fiyattaki marjı gösterir; eşiğin altındaysa uyarır.</summary>
+    private void UpdateMargin(decimal? unitCost)
+    {
+        MarginText = "";
+        MarginWarning = "";
+
+        if (unitCost is not { } cost
+            || !Display.TryParseDecimal(SalePriceText, out var salePrice)
+            || salePrice <= 0)
+            return;
+
+        var margin = PricingCalculator.MarginAtPrice(cost, salePrice);
+        MarginText = $"Bu fiyatla marj: {Display.PercentLabel(margin)} · kâr: {Display.Money(salePrice - cost)} (komisyon öncesi)";
+
+        var threshold = settings.MarginWarningPercentValue;
+        if (margin * 100m < threshold)
+            MarginWarning = margin < 0m
+                ? "Satış fiyatı maliyetin altında: zararına satış."
+                : $"Marj, uyarı eşiğinin (%{Display.NumberText(threshold)}) altında.";
     }
 
     /// <summary>Girdilerden canlı bir Recipe kurar (geçersiz sayılar 0) ve Core ile hesaplar.</summary>
@@ -210,14 +249,18 @@ public partial class RecipeEditViewModel(
         OverheadCostText = Display.Money(CostCalculator.OverheadCost(recipe, rate));
         BatchCostText = Display.Money(CostCalculator.BatchCost(recipe, rate));
 
+        decimal? unitCost = null;
         try
         {
-            UnitCostText = Display.Money(CostCalculator.UnitCost(recipe, rate));
+            unitCost = CostCalculator.UnitCost(recipe, rate);
+            UnitCostText = Display.Money(unitCost.Value);
         }
         catch (InvalidOperationException)
         {
             // Verim 0 veya geçersiz: birim maliyet hesaplanamaz.
             UnitCostText = "—";
         }
+
+        UpdateMargin(unitCost);
     }
 }

@@ -76,6 +76,11 @@
                 <Label Grid.Row="4" Grid.Column="1" Text="{Binding UnitCostText}" FontAttributes="Bold" FontSize="18" />
             </Grid>
 
+            <Label Text="Satış fiyatı (₺, KDV hariç, isteğe bağlı)" Margin="0,8,0,0" />
+            <Entry Text="{Binding SalePriceText}" Keyboard="Numeric" Placeholder="Örn. 450" MaximumWidthRequest="300" HorizontalOptions="Start" />
+            <Label Text="{Binding MarginText}" FontAttributes="Bold" />
+            <Label Text="{Binding MarginWarning}" TextColor="DarkOrange" IsVisible="{Binding HasMarginWarning}" />
+
             <Label Text="{Binding ErrorMessage}" TextColor="Red" IsVisible="{Binding HasError}" />
 
             <HorizontalStackLayout Spacing="12" Margin="0,8,0,24">

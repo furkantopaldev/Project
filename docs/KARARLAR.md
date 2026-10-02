@@ -46,6 +46,12 @@ Neden: önceki davranışta (boşsa her açılışta yükle) silme işlemi bir s
 
 **Genel gider % ayarı yalnızca yeni reçetelerin başlangıç değeridir; mevcut reçeteleri değiştirmez.** Her reçete kendi oranını saklar.
 
+**Reçeteye isteğe bağlı `SalePrice` (satış fiyatı, KDV hariç) eklendi; reçete başına tek fiyat, platform bazlı değil.**
+Neden: "marj düştü" uyarısı ve müşteri fiyat listesi PDF'i (Faz 4) için "ürünü şu an kaça satıyorum" bilgisi gerekiyor. Simülatör sadece öneri veriyordu, kaydetmiyordu. Sütun nullable; eski veritabanlarında sqlite-net otomatik ekler (gerçek eski veritabanında doğrulandı).
+
+**Marj tanımı (satış fiyatı için): (fiyat - birim maliyet) / fiyat, komisyon öncesi.** Platform bazlı marjı simülatör gösterir.
+**Marj uyarı eşiği Ayarlar'da tek bir genel değer (varsayılan %30); reçete bazlı eşik yok.** Eşiğin altında reçete düzenlemede uyarı, listede "⚠ düşük" görünür.
+
 **Çalışma şekli: faz faz, adım adım ilerlenir. Proje bitince dosya dosya anlatan bir .md (ör. docs/KOD_REHBERI.md) hazırlanacak.**
 
 ## 2026-10-02 İlk planlama oturumu

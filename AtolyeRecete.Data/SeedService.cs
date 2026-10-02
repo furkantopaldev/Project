@@ -37,6 +37,7 @@ public class SeedService(
             Yield = 1m,
             LaborMinutes = 20m,
             OverheadRate = 0.10m,
+            SalePrice = 450m,
             Items =
             {
                 new RecipeItem { Ingredient = wax, Quantity = 180m },
@@ -52,6 +53,7 @@ public class SeedService(
             Yield = 1m,
             LaborMinutes = 15m,
             OverheadRate = 0.10m,
+            SalePrice = 250m,
             Items =
             {
                 new RecipeItem { Ingredient = wax, Quantity = 90m, WasteRate = 0.05m },

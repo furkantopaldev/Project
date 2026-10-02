@@ -10,9 +10,11 @@ public class AppSettings
 {
     public const decimal DefaultHourlyRate = 150m;
     public const decimal DefaultOverheadPercent = 10m;
+    public const decimal DefaultMarginWarningPercent = 30m;
 
     private const string HourlyRateKey = "hourlyRate";
     private const string OverheadKey = "defaultOverheadPercent";
+    private const string MarginWarningKey = "marginWarningPercent";
     private const string SeedAppliedKey = "seedApplied";
 
     /// <summary>Saatlik işçilik ücreti (₺). İşçilik maliyeti bununla hesaplanır.</summary>
@@ -27,6 +29,13 @@ public class AppSettings
     {
         get => ReadDecimal(OverheadKey, DefaultOverheadPercent);
         set => WriteDecimal(OverheadKey, value);
+    }
+
+    /// <summary>Satış fiyatındaki marj bu yüzdenin altına düşerse uyarı gösterilir.</summary>
+    public decimal MarginWarningPercentValue
+    {
+        get => ReadDecimal(MarginWarningKey, DefaultMarginWarningPercent);
+        set => WriteDecimal(MarginWarningKey, value);
     }
 
     /// <summary>

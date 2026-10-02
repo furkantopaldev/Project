@@ -14,4 +14,7 @@ public class Recipe
 
     /// <summary>Genel gider oranı, kesir olarak (0.10 = %10), (malzeme + işçilik) üzerinden.</summary>
     public decimal OverheadRate { get; set; }
+
+    /// <summary>Ürünün şu anki satış fiyatı (KDV hariç). Girilmemişse null.</summary>
+    public decimal? SalePrice { get; set; }
 }

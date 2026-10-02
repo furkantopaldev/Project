@@ -28,6 +28,10 @@ public static class Display
     public static string PercentText(decimal rate) =>
         (rate * 100m).ToString("0.##", AppDefaults.Culture);
 
+    /// <summary>"%60,64" veya negatifse "-%77,1" (eksi işareti yüzde işaretinden önce).</summary>
+    public static string PercentLabel(decimal rate) =>
+        (rate < 0m ? "-" : "") + "%" + PercentText(Math.Abs(rate));
+
     public static string NumberText(decimal value) => value.ToString("0.##", AppDefaults.Culture);
 
     /// <summary>Canlı önizleme için: geçersiz veya boş girdi 0 sayılır.</summary>

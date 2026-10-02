@@ -36,11 +36,17 @@ public partial class RecipesViewModel(
         {
             // Hesap Core'da; burada sadece biçimlendirme.
             var unitCost = CostCalculator.UnitCost(r, settings.HourlyRate);
-            Items.Add(new RecipeListItem(
-                r.Id,
-                r.Name,
-                $"{r.Items.Count} kalem · verim {Display.NumberText(r.Yield)}",
-                Display.Money(unitCost)));
+            var detail = $"{r.Items.Count} kalem · verim {Display.NumberText(r.Yield)}";
+
+            if (r.SalePrice is { } salePrice)
+            {
+                var margin = PricingCalculator.MarginAtPrice(unitCost, salePrice);
+                detail += $" · satış {Display.Money(salePrice)} · marj {Display.PercentLabel(margin)}";
+                if (margin * 100m < settings.MarginWarningPercentValue)
+                    detail += " ⚠ düşük";
+            }
+
+            Items.Add(new RecipeListItem(r.Id, r.Name, detail, Display.Money(unitCost)));
         }
     }
 

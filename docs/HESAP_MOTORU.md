@@ -30,6 +30,14 @@ Geçerlilik: `k < 1`.
 
 Arayüzde mod açıkça seçtirilir; aynı "%40" iki modda çok farklı fiyat verir.
 
+## Verilen satış fiyatında marj
+
+Reçetede kayıtlı satış fiyatı S için (komisyon öncesi, kesir olarak):
+
+`marj = (S - C) / S`
+
+Geçerlilik: `S > 0`, aksi halde hata. `S < C` ise negatif döner (zararına satış). Örnek: C = 177.10, S = 354.20 → 0.50. Uyarı, `marj x 100 < eşik` olduğunda gösterilir (eşik Ayarlar'da, varsayılan 30).
+
 ## Test senaryosu 1 (altın örnek)
 
 Hammadde: soya mumu 1000 g = 300 TL (0.30 TL/g), esans 50 ml = 150 TL (3 TL/ml), fitil 2 TL/adet, cam kavanoz 25 TL/adet.
