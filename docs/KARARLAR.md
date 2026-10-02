@@ -93,6 +93,12 @@ Neden: içerik kadar daralan alanlar telefonda çok küçük çıkıyordu ("150"
 **Listelerin sıralaması Türkçe alfabeye göre ve bellekte yapılır (`TextOrder.Turkish`, Core); SQL `ORDER BY` kullanılmaz.** Fiyat listesi PDF'i, hammadde ve reçete listeleri aynı karşılaştırıcıyı kullanır.
 Neden: SQLite'ın varsayılan sıralaması (BINARY) büyük harfi küçüğün önüne koyar ve ç/ş/ğ'yi en sona atar ("bambu", "çam", "şeker" listenin sonuna düşerdi). Örnek veri ve testler ASCII büyük harfli adlar kullandığı için kod yazılırken fark edilmedi; kod rehberi yazılırken şüphelenilip doğrulandı ve testle düzeltildi. Ders: test verisi gerçek kullanıcı verisini (Türkçe karakter, küçük harf) temsil etmeli.
 
+**`MVVMTK0045` uyarısı bilinçli olarak susturuldu (`.csproj`, `NoWarn`).** CommunityToolkit.Mvvm, alan tabanlı `[ObservableProperty]` için WinRT/AOT senaryosunda "kısmi özellik kullan" der.
+Neden: paketlenmemiş MAUI uygulamamızı (Windows `WindowsPackageType=None`, Android) ilgilendirmiyor; kısmi özellikler ise .NET 9'da `LangVersion=preview` ister. Gürültüsüz derleme (0 uyarı) hedefini korumak için susturuldu.
+
+**Kod rehberi: `docs/KOD_REHBERI.md`.** Mimari, her katmanın nedenleri, mühendislik terimleri sözlüğü, test stratejisi ve **bulunan hataların kataloğu**, teknik borç listesi ve alıştırmalar. Kod değiştikçe güncellenmelidir (özellikle test sayıları ve dosya haritası).
+Neden: projeyi ilk kez yazan biri için "ne" kadar "neden" de önemli; hata kataloğu ise hangi test türünün hangi hatayı yakaladığını gösteriyor.
+
 **Çalışma şekli: faz faz, adım adım ilerlenir. Proje bitince dosya dosya anlatan bir .md (ör. docs/KOD_REHBERI.md) hazırlanacak.**
 
 ## 2026-10-02 İlk planlama oturumu

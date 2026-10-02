@@ -38,7 +38,7 @@ Yok (sonra): stok bildirimi, sipariş kuyruğu, çoklu para birimi, barkod, hesa
 
 ## Çalışma şekli
 
-- Bu proje claude.ai sohbetinde planlandı. Mimari kararlar ve nedenleri `docs/KARARLAR.md`, fazlar `docs/YOL_HARITASI.md`, formüller ve test senaryoları `docs/HESAP_MOTORU.md` içinde.
+- Bu proje claude.ai sohbetinde planlandı. Mimari kararlar ve nedenleri `docs/KARARLAR.md`, fazlar `docs/YOL_HARITASI.md`, formüller ve test senaryoları `docs/HESAP_MOTORU.md`, kod ve test stratejisi anlatımı `docs/KOD_REHBERI.md` (kod değiştikçe test sayıları ve dosya haritası güncellenir) içinde.
 - Yeni önemli bir karar alındığında `docs/KARARLAR.md` güncellenir (tarih + karar + neden).
 - Bir göreve başlamadan önce ilgili docs dosyasını oku; formül değiştirmeden önce `HESAP_MOTORU.md`'deki test senaryolarını kontrol et.
 
