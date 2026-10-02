@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="AtolyeRecete.App.Views.SimulatorPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:vm="clr-namespace:AtolyeRecete.App.ViewModels"
+    xmlns:models="clr-namespace:AtolyeRecete.Core.Models;assembly=AtolyeRecete.Core"
+    x:DataType="vm:SimulatorViewModel"
+    Title="Pazaryeri simülatörü">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="24" Spacing="12" MaximumWidthRequest="900" HorizontalOptions="Fill">
+
+            <Grid ColumnDefinitions="*,*" ColumnSpacing="12" RowDefinitions="Auto,Auto">
+                <Label Text="Reçete" />
+                <Label Grid.Column="1" Text="Platform" />
+                <Picker
+                    Grid.Row="1"
+                    ItemsSource="{Binding Recipes}"
+                    ItemDisplayBinding="{Binding Name, x:DataType=models:Recipe}"
+                    SelectedItem="{Binding SelectedRecipe}" />
+                <Picker
+                    Grid.Row="1" Grid.Column="1"
+                    ItemsSource="{Binding Platforms}"
+                    ItemDisplayBinding="{Binding Name, x:DataType=models:Platform}"
+                    SelectedItem="{Binding SelectedPlatform}" />
+            </Grid>
+            <Label Text="{Binding PlatformNote}" FontSize="12" TextColor="Gray" />
+
+            <Label Text="Kâr hesabı" />
+            <Picker
+                ItemsSource="{Binding Modes}"
+                ItemDisplayBinding="{Binding Label, x:DataType=vm:ModeOption}"
+                SelectedItem="{Binding SelectedMode}" />
+
+            <Grid ColumnDefinitions="*,*" ColumnSpacing="12" RowDefinitions="Auto,Auto">
+                <Label Text="Hedef kâr (%)" />
+                <Label Grid.Column="1" Text="Kargo / ek sabit ücret (₺)" />
+                <Entry Grid.Row="1" Text="{Binding ProfitPercentText}" Keyboard="Numeric" />
+                <Entry Grid.Row="1" Grid.Column="1" Text="{Binding ExtraFeeText}" Keyboard="Numeric" />
+            </Grid>
+
+            <Label Text="{Binding Message}" TextColor="Red" IsVisible="{Binding HasMessage}" />
+
+            <VerticalStackLayout Spacing="6" IsVisible="{Binding HasResult}" Margin="0,8,0,0">
+                <Label Text="Önerilen satış fiyatı" FontSize="14" TextColor="Gray" />
+                <Label Text="{Binding PriceText}" FontSize="36" FontAttributes="Bold" />
+
+                <Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto,Auto,Auto" RowSpacing="4" Margin="0,8,0,0">
+                    <Label Text="Birim maliyet" />
+                    <Label Grid.Column="1" Text="{Binding UnitCostText}" />
+                    <Label Grid.Row="1" Text="Platform komisyonu" />
+                    <Label Grid.Row="1" Grid.Column="1" Text="{Binding CommissionText}" />
+                    <Label Grid.Row="2" Text="Sabit ücretler" />
+                    <Label Grid.Row="2" Grid.Column="1" Text="{Binding FixedFeeText}" />
+                    <Label Grid.Row="3" Text="Net kâr" FontAttributes="Bold" />
+                    <Label Grid.Row="3" Grid.Column="1" Text="{Binding NetProfitText}" FontAttributes="Bold" />
+                </Grid>
+
+                <Label Text="{Binding MarginText}" />
+                <Label Text="{Binding MarkupText}" />
+            </VerticalStackLayout>
+
+            <Label Text="Aynı reçete, tüm platformlarda" FontAttributes="Bold" FontSize="18" Margin="0,16,0,0" />
+            <Grid ColumnDefinitions="2*,*,*,*" ColumnSpacing="8">
+                <Label Text="Platform" FontSize="12" TextColor="Gray" />
+                <Label Grid.Column="1" Text="Komisyon" FontSize="12" TextColor="Gray" />
+                <Label Grid.Column="2" Text="Fiyat" FontSize="12" TextColor="Gray" />
+                <Label Grid.Column="3" Text="Net kâr" FontSize="12" TextColor="Gray" />
+            </Grid>
+            <VerticalStackLayout Spacing="4" BindableLayout.ItemsSource="{Binding Comparison}">
+                <BindableLayout.ItemTemplate>
+                    <DataTemplate x:DataType="vm:PlatformPriceRow">
+                        <Grid ColumnDefinitions="2*,*,*,*" ColumnSpacing="8">
+                            <Label Text="{Binding Name}" />
+                            <Label Grid.Column="1" Text="{Binding CommissionText}" />
+                            <Label Grid.Column="2" Text="{Binding PriceText}" FontAttributes="Bold" />
+                            <Label Grid.Column="3" Text="{Binding NetProfitText}" />
+                        </Grid>
+                    </DataTemplate>
+                </BindableLayout.ItemTemplate>
+            </VerticalStackLayout>
+
+            <Label
+                Text="Komisyon oranları örnektir; yayın öncesi güncel platform tablolarından doğrulanmalıdır."
+                FontSize="12" TextColor="Gray" Margin="0,16,0,24" />
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

@@ -28,6 +28,16 @@ Neden: NU1202 uyumsuzluk hatası. .NET 10'a geçilirse birlikte yükseltilir.
 **MAUI hedefi şimdilik sadece net9.0-windows10.0.19041.0.** Android/iOS/Mac hedefleri csproj'dan çıkarıldı.
 Neden: demo Windows'ta; gereksiz iş yükü derlenmesin. Android için csproj'a net9.0-android eklenir.
 
+**platforms.json: `{ "version": 1, "platforms": [...] }`, MAUI asset olarak uygulamayla gelir (Resources/Raw).** Okuma ve doğrulama Core'da (`PlatformCatalog`), dosyaya erişim App'te (`PlatformService`).
+Neden: oranlar koda gömülmez, ileride uzaktan çekilebilir (sürüm alanı bunun için). Eksik veya geçersiz alan sessizce 0 sayılmaz, `FormatException` verir.
+
+**Fiyat dökümü (`PriceBreakdown`) yuvarlanmış önerilen fiyat üzerinden hesaplanır.** Komisyon, net kâr ve gerçekleşen marj/markup yuvarlanmaz, gösterimde yuvarlanır.
+Neden: satıcının gerçekten alacağı fiyat kuruşa yuvarlanmış fiyattır; hedef orandan birkaç kuruş sapma doğaldır.
+
+**Simülatörde "ek sabit ücret" (kargo vb.) platformun sabit ücretine eklenir.** Simülatör seçili platformun dökümünü ve aynı reçetenin tüm platformlardaki fiyatını gösterir.
+
+**App'te `Platform` adı MAUI'nin `Microsoft.Maui.ApplicationModel.Platform` sınıfıyla çakışır; ilgili dosyalarda `using Platform = AtolyeRecete.Core.Models.Platform;` takma adı kullanılır.** Modeli yeniden adlandırmak Core, testler ve dokümanlara dokunurdu.
+
 **Çalışma şekli: faz faz, adım adım ilerlenir. Proje bitince dosya dosya anlatan bir .md (ör. docs/KOD_REHBERI.md) hazırlanacak.**
 
 ## 2026-10-02 İlk planlama oturumu

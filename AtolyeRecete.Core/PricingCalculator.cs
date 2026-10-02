@@ -17,6 +17,29 @@ public static class PricingCalculator
         };
 
     /// <summary>
+    /// Önerilen fiyat ve döküm (komisyon, net kâr, gerçekleşen marj/markup).
+    /// Hesaplanamıyorsa <see cref="InvalidOperationException"/> fırlatır.
+    /// </summary>
+    public static PriceBreakdown Analyze(
+        decimal unitCost, Platform platform, decimal profitRate, ProfitMode mode = ProfitMode.Margin)
+    {
+        var price = SuggestPrice(unitCost, platform, profitRate, mode);
+
+        // Döküm, yuvarlanmış (satıcının gerçekten alacağı) fiyat üzerinden hesaplanır.
+        var commission = price * platform.CommissionRate;
+        var netProfit = price - commission - platform.FixedFee - unitCost;
+
+        return new PriceBreakdown(
+            Price: price,
+            UnitCost: unitCost,
+            Commission: commission,
+            FixedFee: platform.FixedFee,
+            NetProfit: netProfit,
+            MarginRate: price > 0m ? netProfit / price : 0m,
+            MarkupRate: unitCost > 0m ? netProfit / unitCost : 0m);
+    }
+
+    /// <summary>
     /// Önerilen satış fiyatı, 2 basamağa yuvarlanmış.
     /// Marj:   P = (C + F) / (1 - k - m)
     /// Markup: P = (C x (1 + m) + F) / (1 - k)

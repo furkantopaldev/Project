@@ -1,0 +1,42 @@
+{
+  "version": 1,
+  "note": "ÖRNEK ORANLAR. Yayın öncesi her platformun güncel komisyon ve ücret tablosundan doğrulanmalı.",
+  "platforms": [
+    {
+      "name": "Trendyol",
+      "commissionRate": 0.20,
+      "fixedFee": 0,
+      "notes": "Örnek oran. Kategoriye göre değişir."
+    },
+    {
+      "name": "Hepsiburada",
+      "commissionRate": 0.18,
+      "fixedFee": 0,
+      "notes": "Örnek oran. Kategoriye göre değişir."
+    },
+    {
+      "name": "N11",
+      "commissionRate": 0.15,
+      "fixedFee": 0,
+      "notes": "Örnek oran."
+    },
+    {
+      "name": "Etsy",
+      "commissionRate": 0.095,
+      "fixedFee": 0,
+      "notes": "Örnek oran: işlem + ödeme ücreti toplamı varsayımı."
+    },
+    {
+      "name": "Kendi sitem / kredi kartı",
+      "commissionRate": 0.035,
+      "fixedFee": 0,
+      "notes": "Örnek oran: sanal pos komisyonu."
+    },
+    {
+      "name": "Elden satış",
+      "commissionRate": 0,
+      "fixedFee": 0,
+      "notes": "Komisyon yok."
+    }
+  ]
+}

@@ -19,6 +19,10 @@
             Title="Reçeteler"
             ContentTemplate="{DataTemplate views:RecipesPage}"
             Route="RecipesPage" />
+        <ShellContent
+            Title="Simülatör"
+            ContentTemplate="{DataTemplate views:SimulatorPage}"
+            Route="SimulatorPage" />
     </TabBar>
 
 </Shell>
