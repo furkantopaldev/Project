@@ -87,6 +87,9 @@ Neden: 360 dp genişliğindeki telefonda "Hammaddeler" ve "Fiyat listesi" sekmed
 **Mobil doğrulama (gerçek telefon yerine emülatör, ayarlarla zorlanarak):** Android 16 emülatörde Debug ve Release (trimleme + AOT) sürümleri denendi: açılış, tüm sekmeler, SQLite, PDF üretimi/Aç/Paylaş, marj uyarısı çalışıyor. Türkçe uygulama diliyle virgüllü sayı girişi çalışıyor (İngilizce dilde Android sayı klavyesi virgülü süzüyordu). 360 dp ekran, %130 yazı boyutu, karanlık mod ve yatay mod zorlandı; düzen bozulmadı. Karanlık modda kartlar `Gray600`, marka başlığı `PrimaryDark` ile okunur hâle getirildi.
 Bilinen sınırlar: gerçek telefonda (özellikle düşük donanım, farklı klavye) denenmedi; Release APK `arm64-v8a` ve `x86_64` yerel kitaplık içerir, 32 bit `armeabi-v7a` yok; Windows'ta çok dar pencerede sekme çubuğu "Diğer" menüsüne taşar (hedef kullanım değil).
 
+**Form alanları (Ayarlar, Hammadde düzenle, Satış fiyatı) tam genişlikte; sütun genişliği sayfada sınırlanır (Ayarlar 600, Hammadde düzenle 520), alanlarda ayrı `MaximumWidthRequest`/`Start` yok.**
+Neden: içerik kadar daralan alanlar telefonda çok küçük çıkıyordu ("150" alanı ~50 piksel), parmakla vurmak zordu. Emülatörde Hammadde ve Fiyatlar sayfaları açık/karanlık temada ve küçük ekranda tekrar doğrulandı.
+
 **Çalışma şekli: faz faz, adım adım ilerlenir. Proje bitince dosya dosya anlatan bir .md (ör. docs/KOD_REHBERI.md) hazırlanacak.**
 
 ## 2026-10-02 İlk planlama oturumu

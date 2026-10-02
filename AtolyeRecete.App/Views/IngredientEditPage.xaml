@@ -8,7 +8,7 @@
     Title="{Binding PageTitle}">
 
     <ScrollView>
-        <VerticalStackLayout Padding="24" Spacing="12" MaximumWidthRequest="520" HorizontalOptions="Start">
+        <VerticalStackLayout Padding="24" Spacing="12" MaximumWidthRequest="520" HorizontalOptions="Fill">
 
             <Label Text="Ad" />
             <Entry Text="{Binding Name}" Placeholder="Örn. Soya mumu" />

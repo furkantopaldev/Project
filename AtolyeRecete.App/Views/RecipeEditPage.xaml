@@ -88,7 +88,7 @@
             </Grid>
 
             <Label Text="Satış fiyatı (₺, KDV hariç, isteğe bağlı)" Margin="0,8,0,0" />
-            <Entry Text="{Binding SalePriceText}" Keyboard="Numeric" Placeholder="Örn. 450" MaximumWidthRequest="300" HorizontalOptions="Start" />
+            <Entry Text="{Binding SalePriceText}" Keyboard="Numeric" Placeholder="Örn. 450" />
             <Label Text="{Binding MarginText}" FontAttributes="Bold" />
             <Label Text="{Binding MarginWarning}" TextColor="DarkOrange" IsVisible="{Binding HasMarginWarning}" />
 
