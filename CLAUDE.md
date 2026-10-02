@@ -9,7 +9,7 @@ Amaç şu an: öğrenme + sunum için çalışan, güzel bir MVP. Pazar doğrula
 - .NET MAUI (.NET 9), MVVM, `CommunityToolkit.Mvvm` (source generators), `CommunityToolkit.Maui`
 - Yerel veri: `sqlite-net-pcl` (backend YOK, MVP'de eklenmeyecek)
 - PDF: QuestPDF (müşteriye giden fiyat listesi)
-- Testler: xUnit (sadece Core projesi)
+- Testler: xUnit (Core hesap motoru + Data katmanı, bellek içi SQLite ile)
 
 ## Çözüm yapısı
 
@@ -17,7 +17,7 @@ Amaç şu an: öğrenme + sunum için çalışan, güzel bir MVP. Pazar doğrula
 AtolyeRecete.Core   -> domain modelleri + hesap motoru. Saf C#, MAUI/SQLite bağımlılığı YOK.
 AtolyeRecete.Data   -> SQLite repository'leri, SeedService
 AtolyeRecete.App    -> MAUI: Views, ViewModels, Shell
-AtolyeRecete.Tests  -> Core için xUnit testleri
+AtolyeRecete.Tests  -> Core ve Data için xUnit testleri
 ```
 
 ## Kesin kurallar

@@ -20,6 +20,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\AtolyeRecete.Core\AtolyeRecete.Core.csproj" />
+    <ProjectReference Include="..\AtolyeRecete.Data\AtolyeRecete.Data.csproj" />
   </ItemGroup>
 
 </Project>

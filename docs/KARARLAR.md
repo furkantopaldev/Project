@@ -14,6 +14,14 @@ Neden: makinede hazır, emülatör kurulumu gerekmez.
 
 **Hammadde tek birimde tutulur (g, ml, adet); birim dönüşümü MVP'de yok.**
 
+**Seed "tek tuşla silme" = tüm veriyi silme (ClearAllAsync).** Sadece örnekleri silmek (IsSeed bayrağı) ertelendi.
+Neden: kullanıcı örnek hammaddeyi düzenleyince/kendi reçetesinde kullanınca bayrak ve silme koruması çakışır; demo için fazla karmaşık.
+
+**Data katmanı: tablo sınıfları (Row) Data'da internal, Core modelleri saf kalır; decimal alanlar metin saklanır.**
+Neden: sqlite-net decimal'i double yazar, para kuralını bozar. Testlerde kayıpsız gidiş-dönüş doğrulanır.
+
+**Testler Data katmanını da kapsar (bellek içi SQLite).** Not: SQLiteAsyncConnection aynı bağlantı dizesi için ortak havuz kullanır; testlerde her veritabanı benzersiz adlı URI ile açılır (AtolyeDatabase.CreateInMemory).
+
 **Çalışma şekli: faz faz, adım adım ilerlenir. Proje bitince dosya dosya anlatan bir .md (ör. docs/KOD_REHBERI.md) hazırlanacak.**
 
 ## 2026-10-02 İlk planlama oturumu
