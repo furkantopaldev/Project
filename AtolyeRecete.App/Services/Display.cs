@@ -22,6 +22,17 @@ public static class Display
     public static string UnitPrice(decimal value) =>
         "₺" + decimal.Round(value, 4, MidpointRounding.AwayFromZero).ToString("0.00##", AppDefaults.Culture);
 
+    /// <summary>Ekranda yüzde (10), modelde kesir (0.10) tutulur.</summary>
+    public static decimal RateFromPercent(decimal percent) => percent / 100m;
+
+    public static string PercentText(decimal rate) =>
+        (rate * 100m).ToString("0.##", AppDefaults.Culture);
+
+    public static string NumberText(decimal value) => value.ToString("0.##", AppDefaults.Culture);
+
+    /// <summary>Canlı önizleme için: geçersiz veya boş girdi 0 sayılır.</summary>
+    public static decimal ParseOrZero(string? text) => TryParseDecimal(text, out var v) ? v : 0m;
+
     /// <summary>
     /// Kullanıcı girdisini sayıya çevirir. "0,30" (Türkçe) ve "0.30" kabul edilir.
     /// Binlik ayracı desteklenmez.

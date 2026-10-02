@@ -15,6 +15,10 @@
             Title="Hammaddeler"
             ContentTemplate="{DataTemplate views:IngredientsPage}"
             Route="IngredientsPage" />
+        <ShellContent
+            Title="Reçeteler"
+            ContentTemplate="{DataTemplate views:RecipesPage}"
+            Route="RecipesPage" />
     </TabBar>
 
 </Shell>

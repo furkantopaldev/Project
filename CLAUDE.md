@@ -54,6 +54,6 @@ Veritabanı: `%LOCALAPPDATA%\User Name\com.atolyerecete.app\Data\atolyerecete.db
 ## Durum
 
 - [x] Faz 1: Core hesap motoru + testler (25 test yeşil)
-- [ ] Faz 2: Data katmanı + hammadde/reçete ekranları
+- [x] Faz 2: Data katmanı + hammadde/reçete ekranları
 - [ ] Faz 3: Pazaryeri simülatörü
 - [ ] Faz 4: PDF + fiyat güncelleme + sunum cilası

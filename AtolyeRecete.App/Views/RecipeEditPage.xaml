@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="AtolyeRecete.App.Views.RecipeEditPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:vm="clr-namespace:AtolyeRecete.App.ViewModels"
+    xmlns:models="clr-namespace:AtolyeRecete.Core.Models;assembly=AtolyeRecete.Core"
+    x:DataType="vm:RecipeEditViewModel"
+    Title="{Binding PageTitle}">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="24" Spacing="12" MaximumWidthRequest="900" HorizontalOptions="Fill">
+
+            <Label Text="Reçete adı" />
+            <Entry Text="{Binding Name}" Placeholder="Örn. 200cc aromaterapi mumu" />
+
+            <Grid ColumnDefinitions="*,*,*" ColumnSpacing="12" RowDefinitions="Auto,Auto">
+                <Label Text="Verim (adet)" />
+                <Label Grid.Column="1" Text="İşçilik süresi (dk)" />
+                <Label Grid.Column="2" Text="Genel gider (%)" />
+                <Entry Grid.Row="1" Text="{Binding YieldText}" Keyboard="Numeric" />
+                <Entry Grid.Row="1" Grid.Column="1" Text="{Binding LaborMinutesText}" Keyboard="Numeric" />
+                <Entry Grid.Row="1" Grid.Column="2" Text="{Binding OverheadPercentText}" Keyboard="Numeric" />
+            </Grid>
+            <Label Text="Süre ve malzeme tüm parti içindir; birim maliyet verime bölünerek bulunur."
+                   FontSize="12" TextColor="Gray" />
+
+            <Label Text="Kalemler" FontAttributes="Bold" FontSize="18" Margin="0,8,0,0" />
+
+            <Grid ColumnDefinitions="3*,*,50,*,*,40" ColumnSpacing="8">
+                <Label Text="Hammadde" FontSize="12" TextColor="Gray" />
+                <Label Grid.Column="1" Text="Miktar" FontSize="12" TextColor="Gray" />
+                <Label Grid.Column="3" Text="Fire (%)" FontSize="12" TextColor="Gray" />
+                <Label Grid.Column="4" Text="Tutar" FontSize="12" TextColor="Gray" />
+            </Grid>
+
+            <VerticalStackLayout Spacing="4" BindableLayout.ItemsSource="{Binding Items}">
+                <BindableLayout.ItemTemplate>
+                    <DataTemplate x:DataType="vm:RecipeItemViewModel">
+                        <Grid ColumnDefinitions="3*,*,50,*,*,40" ColumnSpacing="8">
+                            <Picker
+                                ItemsSource="{Binding Ingredients}"
+                                ItemDisplayBinding="{Binding Name, x:DataType=models:Ingredient}"
+                                SelectedItem="{Binding SelectedIngredient}" />
+                            <Entry Grid.Column="1" Text="{Binding QuantityText}" Keyboard="Numeric" />
+                            <Label Grid.Column="2" Text="{Binding UnitLabel}" VerticalOptions="Center" />
+                            <Entry Grid.Column="3" Text="{Binding WasteText}" Keyboard="Numeric" />
+                            <Label Grid.Column="4" Text="{Binding CostText}" VerticalOptions="Center" />
+                            <Button
+                                Grid.Column="5"
+                                Text="✕"
+                                Command="{Binding RemoveCommand}"
+                                Padding="0"
+                                BackgroundColor="Transparent"
+                                TextColor="Firebrick" />
+                        </Grid>
+                    </DataTemplate>
+                </BindableLayout.ItemTemplate>
+            </VerticalStackLayout>
+
+            <Button Text="+ Kalem ekle" Command="{Binding AddItemCommand}" HorizontalOptions="Start" />
+
+            <Label Text="Maliyet özeti" FontAttributes="Bold" FontSize="18" Margin="0,16,0,0" />
+            <Label Text="{Binding HourlyRateText}" FontSize="12" TextColor="Gray" />
+
+            <Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto,Auto,Auto,Auto" RowSpacing="4">
+                <Label Text="Malzeme" />
+                <Label Grid.Column="1" Text="{Binding MaterialCostText}" />
+                <Label Grid.Row="1" Text="İşçilik" />
+                <Label Grid.Row="1" Grid.Column="1" Text="{Binding LaborCostText}" />
+                <Label Grid.Row="2" Text="Genel gider payı" />
+                <Label Grid.Row="2" Grid.Column="1" Text="{Binding OverheadCostText}" />
+                <Label Grid.Row="3" Text="Parti maliyeti" FontAttributes="Bold" />
+                <Label Grid.Row="3" Grid.Column="1" Text="{Binding BatchCostText}" FontAttributes="Bold" />
+                <Label Grid.Row="4" Text="Birim maliyet" FontAttributes="Bold" FontSize="18" />
+                <Label Grid.Row="4" Grid.Column="1" Text="{Binding UnitCostText}" FontAttributes="Bold" FontSize="18" />
+            </Grid>
+
+            <Label Text="{Binding ErrorMessage}" TextColor="Red" IsVisible="{Binding HasError}" />
+
+            <HorizontalStackLayout Spacing="12" Margin="0,8,0,24">
+                <Button Text="Kaydet" Command="{Binding SaveCommand}" />
+                <Button
+                    Text="Sil"
+                    Command="{Binding DeleteCommand}"
+                    IsVisible="{Binding IsExisting}"
+                    BackgroundColor="Firebrick"
+                    TextColor="White" />
+            </HorizontalStackLayout>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>
